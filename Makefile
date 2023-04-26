@@ -1,4 +1,4 @@
 build:
-	javac Flying_Ship.java
+	javac flyingship/src/FlyingShip.java
 run:
-	bash Flying_Ship.sh
+	bash FlyingShip.sh
