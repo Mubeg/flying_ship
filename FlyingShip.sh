@@ -1,1 +1,3 @@
-java flyingship/src/FlyingShip
+cd build
+java flyingship.src.FlyingShip
+cd ..
