@@ -50,14 +50,14 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         initRendering();
     }
     
-    public void loadTextures() {
+    public final void loadTextures() {
         javax.swing.ImageIcon shipIcon = new javax.swing.ImageIcon(imgDir + "ship.png");
         javax.swing.ImageIcon letIcon = new javax.swing.ImageIcon(imgDir + "let.png");
         shipTexture = shipIcon.getImage();
         letTexture = letIcon.getImage();
     }
     
-    public void initRendering() {
+    public final void initRendering() {
         shipX = 200;
         shipY = 200;
         nLets = 0;
