@@ -23,10 +23,12 @@ package flying_ship.gui;
  *
  * @author nerett
  */
-public class GamePanel extends javax.swing.JPanel {
+public class GamePanel extends javax.swing.JPanel implements java.awt.event.ActionListener {
 
     private final int PANELSIZE = 600;
     private final int MAXLETS = 400;
+    private final String imgDir = "img/";
+    
     private java.awt.Image shipTexture;
     private java.awt.Image letTexture;
     private int shipX;
@@ -35,7 +37,7 @@ public class GamePanel extends javax.swing.JPanel {
     private int[] letY = new int[MAXLETS];
     private int nLets;
     private javax.swing.Timer tickTimer;
-    private boolean inGame = true;
+    private boolean inGame;
     
     /**
      * Creates new form GamePanel
@@ -45,12 +47,66 @@ public class GamePanel extends javax.swing.JPanel {
         
         setBackground(java.awt.Color.black);
         loadTextures();
+        initRendering();
     }
     
     public void loadTextures() {
+        javax.swing.ImageIcon shipIcon = new javax.swing.ImageIcon(imgDir + "ship.png");
+        javax.swing.ImageIcon letIcon = new javax.swing.ImageIcon(imgDir + "let.png");
+        shipTexture = shipIcon.getImage();
+        letTexture = letIcon.getImage();
+    }
+    
+    public void initRendering() {
+        shipX = 200;
+        shipY = 200;
+        nLets = 0;
+        inGame = true;
         
+        tickTimer = new javax.swing.Timer(100, this);
+        tickTimer.start();
+    }
+    
+    public void loadPosData() {
+        //!TODO implement JNI receive
+        
+        shipX = 300;
+        shipY = 350;
+    }
+    
+    public void sendCursor() {
+        //!TODO implement JNI send
+        
+        java.awt.Point cursorLocation = java.awt.MouseInfo.getPointerInfo().getLocation();
+        double cursorX = cursorLocation.getX();
+        double cursorY = cursorLocation.getY();
+        
+        //System.out.println(cursorX);
     }
 
+    @Override
+    public void actionPerformed(java.awt.event.ActionEvent e) {
+        if (inGame) {
+            sendCursor();
+            loadPosData();
+        }
+        
+        repaint();
+    }
+    
+    @Override
+    protected void paintComponent(java.awt.Graphics g) {
+        super.paintComponent(g);
+        
+        if (inGame) {
+            g.drawImage(shipTexture, shipX, shipY, this);
+            
+            for (int i = 0; i < nLets; i++) {
+                g.drawImage(letTexture, letX[i], letY[i],this);
+            }
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
