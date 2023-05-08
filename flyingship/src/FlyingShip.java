@@ -1,5 +1,7 @@
 package flyingship.src;
 
+import flyingship.gui.GUI;
+
 /**
  *
  * @author Mubeg
