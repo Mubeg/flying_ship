@@ -1,8 +1,8 @@
 CXX = g++
 CXXFLAGS = -shared -fPIC -DDEBUG
 CXX_INCLUDES = -I/usr/lib/jvm/java-11-openjdk-amd64/include -I/usr/lib/jvm/java-11-openjdk-amd64/include/linux
-BUILD_DIR = build/flyingship/src/
-SRC_DIR = flyingship/src/
+BUILD_DIR = build/JNI/flyingship/src/
+SRC_DIR = JNI/flyingship/src/
 
 
 libnative.so: clean java backend.o

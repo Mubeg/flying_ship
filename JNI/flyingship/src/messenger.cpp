@@ -4,7 +4,7 @@
 std::vector<message_t> messages;
 std::mutex messages_mutex;
 
-JNIEXPORT jbyte JNICALL Java_flyingship_src_Messenger_getMessageNative
+JNIEXPORT jbyte JNICALL Java_JNI_flyingship_src_Messenger_getMessageNative
     (JNIEnv *env, jobject obj, jbyte receiver, jbyteArray jbuff)
 {
     jbyte *buff = (env)->GetByteArrayElements(jbuff, NULL);
@@ -36,7 +36,7 @@ JNIEXPORT jbyte JNICALL Java_flyingship_src_Messenger_getMessageNative
 }
 
 
-JNIEXPORT void JNICALL Java_flyingship_src_Messenger_sendMessageNative
+JNIEXPORT void JNICALL Java_JNI_flyingship_src_Messenger_sendMessageNative
     (JNIEnv *env, jobject obj, jbyteArray msg, int msg_len)
 {
     jbyte *buff = (env)->GetByteArrayElements(msg, NULL);

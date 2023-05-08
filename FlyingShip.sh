@@ -1,3 +1,3 @@
 cd build
-java flyingship.src.FlyingShip
+java JNI.flyingship.src.FlyingShip
 cd ..

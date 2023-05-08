@@ -6,7 +6,7 @@
 
 #define DATA_LEN 100
 
-#include "headers/flyingship_src_Messenger.h"
+#include "headers/JNI_flyingship_src_Messenger.h"
 
 
 typedef struct __attribute__((packed)) Message

@@ -1,4 +1,4 @@
-package flyingship.src;
+package JNI.flyingship.src;
 
 import flyingship.gui.GUI;
 

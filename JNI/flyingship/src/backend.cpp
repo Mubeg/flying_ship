@@ -1,7 +1,7 @@
 
 #include "backend.h"
 
-JNIEXPORT void JNICALL Java_flyingship_src_Backend_run
+JNIEXPORT void JNICALL Java_JNI_flyingship_src_Backend_run
     (JNIEnv *env, jobject obj)
 {
     Backend backend{};

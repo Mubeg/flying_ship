@@ -1,4 +1,4 @@
-package flyingship.src;
+package JNI.flyingship.src;
 
 /**
  *
@@ -10,6 +10,6 @@ public class Backend extends Thread {
 
     static {
         System.load(
-                System.getProperty("user.dir") + "/flyingship/src/libnative.so");
+                System.getProperty("user.dir") + "/JNI//flyingship/src/libnative.so");
        }
 }
