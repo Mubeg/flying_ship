@@ -10,7 +10,7 @@ public class FlyingShip {
 
     public static void main(String[] args) {
 
-        Messenger messenger = new Messenger((byte) 2);  //2 is GUI's reserved ID
+        Messenger messenger = new Messenger(SenderIds.Overseer.getValue());
         Backend backend = new Backend();
         GUI gui = new GUI();
         backend.start();

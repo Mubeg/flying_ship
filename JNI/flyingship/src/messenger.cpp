@@ -68,6 +68,11 @@ Messenger::Messenger(char id) : my_id(id)
     messages_q = &messages;
 }
 
+
+/*
+Receives one message designated to this reciever
+@return message_t struct. If no message is found, returns Bad type
+*/
 message_t Messenger::get_message()
 {
     message_t message = {};
@@ -87,6 +92,11 @@ message_t Messenger::get_message()
     return message;
 }
 
+
+/*
+Sends a message decribes in msg structure
+@param msg message to be sent (sender will be set to messenger's id)
+*/
 void Messenger::send_message(message_t msg)
 {
     msg.sender = my_id;
