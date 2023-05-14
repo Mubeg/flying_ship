@@ -12,7 +12,8 @@
 namespace msg{
 
     enum SenderIds{
-        Overseer = 1,
+        Bad,
+        Overseer,
         Backend,
         Frontend
     };
@@ -22,7 +23,8 @@ namespace msg{
         RequestSettings,
         SettingsUpdate,
         Pause,
-        Stop
+        Stop,
+        Resume
     };
 
 }

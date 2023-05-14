@@ -5,11 +5,8 @@ package JNI.flyingship.src;
  * @author Mubeg
  */
 public enum SenderIds {
+    Bad,
     Overseer,
     Backend,
     Frontend;
-
-    public byte getValue() {
-        return (byte) (ordinal() + 1);
-    }
 }
