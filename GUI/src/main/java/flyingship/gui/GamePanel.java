@@ -18,6 +18,7 @@ package flyingship.gui;
 
 //import javax.swing.*;
 //import java.awt.*;
+import JNI.flyingship.src.Messenger;
 
 /**
  *
