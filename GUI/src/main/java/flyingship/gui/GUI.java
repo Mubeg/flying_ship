@@ -26,7 +26,7 @@ public class GUI extends Thread {
     public static void main(String[] args) {
         System.out.println("Hello World!");
         
-        //MainFrame flyingShipFrame = new MainFrame();
+        MainFrame flyingShipFrame = new MainFrame();
     }
     
     public void run() {
