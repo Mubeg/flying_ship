@@ -21,6 +21,8 @@ package flyingship.gui;
 //import JNI.flyingship.src.*;
 import JNI.flyingship.src.Messenger;
 import JNI.flyingship.src.Message;
+import JNI.flyingship.src.MessagesTypes;
+import JNI.flyingship.src.SenderIds;
 
 /**
  *
@@ -28,6 +30,8 @@ import JNI.flyingship.src.Message;
  */
 public class GamePanel extends javax.swing.JPanel implements java.awt.event.ActionListener {
 
+    private final int SIZEOF_INT = 32;
+    
     private final int UPDATEINTERVAL = 100;
     private final int MAXLETS = 400;
     private final String imgDir = "img/";
@@ -103,7 +107,10 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         int cursorX = (int)cursorLocation.getX();
         int cursorY = (int)cursorLocation.getY();
         
-        Message message = new Message(); //!TODO use another Ctor
+        byte[] data; // = new byte[2*SIZEOF_INT];
+        //(int)data[0] = cursorX;
+        
+        Message message = new Message(MessagesTypes.SendInfo.value(), SenderIds.Backend.value(), data);
         
         //!TODO implement
         /*
@@ -132,7 +139,7 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         
         super.paintComponent(g);
         
-        System.out.println("Repaint");
+        //System.out.println("Repaint");
         
         if (inGame) {
             ship.draw(g, this);
