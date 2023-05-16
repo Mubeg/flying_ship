@@ -1,4 +1,7 @@
-using namespace std::chrono_literals;
+#include <chrono>
+#pragma once
+
+using namespace std::literals::chrono_literals;
 
 #define UNIQUE_IDS_N 4000
 #define AGENT_Y_PADDING 20

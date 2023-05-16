@@ -1,3 +1,4 @@
+#pragma once
 #include <jni.h>
 #include <stdio.h>
 #include <messenger.h>
@@ -14,5 +15,5 @@ class Backend{
 
     public:
     Backend();
-    void env_run();
+    void run();
 };

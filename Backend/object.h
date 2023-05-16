@@ -1,4 +1,5 @@
 #include "constants.h"
+#pragma once
 
 class Object{
 

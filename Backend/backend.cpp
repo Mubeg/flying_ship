@@ -1,15 +1,21 @@
-
 #include "backend.h"
 
 JNIEXPORT void JNICALL Java_JNI_flyingship_src_Backend_run
     (JNIEnv *env, jobject obj)
 {
-    Backend backend();
+    Backend *backend = new Backend();
+    backend->run();
+    delete backend;
 }
 
 
-Backend::Backend() : messenger(msg::Backend), env(messenger), env_thread(env_run)
+Backend::Backend() : messenger(msg::Backend), env(messenger), env_thread((&Environment::run), env)
 {
+    
+}
+
+void Backend::run(){
+
     message_t msg = {};
     bool running = true;
     do{
@@ -33,8 +39,4 @@ Backend::Backend() : messenger(msg::Backend), env(messenger), env_thread(env_run
         }
         std::this_thread::sleep_for(BACKEND_SLEEP_TIME);
     } while(running);
-}
-
-void Backend::env_run(){
-    env.run();
 }
