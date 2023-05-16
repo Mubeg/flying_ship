@@ -22,6 +22,8 @@ package flyingship.gui;
  */
 public class MainFrame extends javax.swing.JFrame {
 
+    public final java.awt.Dimension FIELDSIZE = new java.awt.Dimension(1280, 720);
+    
     /**
      * Creates new form MainFrame
      */
@@ -29,11 +31,14 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         
         setTitle("Flying Ship");
-        setSize(1280,720);
+        setSize(FIELDSIZE);
         setResizable(false);
         //setLocation(400,400);
         
-        add(new GamePanel());
+        GamePanel panel = new GamePanel();
+        panel.setSize(FIELDSIZE);
+        add(panel);
+        
         setVisible(true);
     }
 

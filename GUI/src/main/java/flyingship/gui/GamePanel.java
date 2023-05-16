@@ -28,7 +28,7 @@ import JNI.flyingship.src.Message;
  */
 public class GamePanel extends javax.swing.JPanel implements java.awt.event.ActionListener {
 
-    private final int PANELSIZE = 600;
+    private final int UPDATEINTERVAL = 100;
     private final int MAXLETS = 400;
     private final String imgDir = "img/";
     
@@ -54,10 +54,6 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         setBackground(java.awt.Color.black);
         loadTextures();
         initRendering();
-        
-        //setPreferredSize();
-        //setMaximumSize();
-        setSize(1280, 720); //! TODO refactor
     }
     
     public final void loadTextures() {
@@ -71,13 +67,16 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         
         ship = new GameEntity(shipTexture, 100, 100, 70, 70);
         lets = new GameEntity[MAXLETS];
+        for (int i = 0; i < MAXLETS; i++) {
+            lets[i] = new GameEntity(letTexture, 200, 200, 50, 50);
+        }
         
         messenger = new Messenger((byte)3);
         
         nLets = 0;
         inGame = true;
         
-        tickTimer = new javax.swing.Timer(100, this);
+        tickTimer = new javax.swing.Timer(UPDATEINTERVAL, this);
         tickTimer.start();
     }
     
