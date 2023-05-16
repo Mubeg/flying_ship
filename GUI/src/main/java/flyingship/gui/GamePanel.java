@@ -31,11 +31,12 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
     
     private java.awt.Image shipTexture;
     private java.awt.Image letTexture;
-    private int shipX;
-    private int shipY;
-    private int[] letX = new int[MAXLETS];
-    private int[] letY = new int[MAXLETS];
+    
+    private GameEntity ship;
+    private GameEntity[] lets;
+
     private int nLets;
+    
     private javax.swing.Timer tickTimer;
     private boolean inGame;
     
@@ -62,8 +63,10 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
     }
     
     public final void initRendering() {
-        shipX = 200;
-        shipY = 200;
+        
+        ship = new GameEntity(shipTexture, 100, 100, 70, 70);
+        lets = new GameEntity[MAXLETS];
+        
         nLets = 0;
         inGame = true;
         
@@ -74,8 +77,7 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
     public void loadPosData() {
         //!TODO implement JNI receive
         
-        shipX = 300;
-        shipY = 350;
+        ship.move(300, 350);
     }
     
     public void sendCursor() {
@@ -108,34 +110,17 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         
         System.out.println("Repaint2");
         
-        //if (inGame) {
-            g.drawImage(shipTexture, shipX, shipY, this);
-            
-            for (int i = 0; i < nLets; i++) {
-                g.drawImage(letTexture, letX[i], letY[i],this);
-            }
-        //}
-    }
-    
-    /*
-    @Override
-    public void paint(java.awt.Graphics g) {
-        
-        System.out.println("Repaint1");
-        
-        super.paint(g);
-        
-        System.out.println("Repaint2");
-        
         if (inGame) {
-            g.drawImage(shipTexture, shipX, shipY, this);
+            //ship.move(150, 150);
+            //ship.resize(100,100);
+            //ship.setTexture(shipTexture);
+            ship.draw(g, this);
             
             for (int i = 0; i < nLets; i++) {
-                g.drawImage(letTexture, letX[i], letY[i],this);
+                lets[i].draw(g, this);
             }
         }
     }
-    */
     
     /**
      * This method is called from within the constructor to initialize the form.
