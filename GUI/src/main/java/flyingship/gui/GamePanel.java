@@ -18,7 +18,9 @@ package flyingship.gui;
 
 //import javax.swing.*;
 //import java.awt.*;
+//import JNI.flyingship.src.*;
 import JNI.flyingship.src.Messenger;
+import JNI.flyingship.src.Message;
 
 /**
  *
@@ -40,6 +42,8 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
     
     private javax.swing.Timer tickTimer;
     private boolean inGame;
+    
+    private Messenger messenger;
     
     /**
      * Creates new form GamePanel
@@ -68,6 +72,8 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         ship = new GameEntity(shipTexture, 100, 100, 70, 70);
         lets = new GameEntity[MAXLETS];
         
+        messenger = new Messenger((byte)3);
+        
         nLets = 0;
         inGame = true;
         
@@ -76,19 +82,40 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
     }
     
     public void loadPosData() {
-        //!TODO implement JNI receive
         
-        ship.move(300, 350);
+        Message message = messenger.getMessage();
+        
+        //!TODO implement
+        /*
+        ship.move(,);
+        ship.resize(,);
+        
+        nLets = ;
+        for (int i = 0; i < nLets; i++) {
+            lets[i].move(,);
+            lets[i].resize(,);
+        }
+        */
     }
     
     public void sendCursor() {
-        //!TODO implement JNI send
         
         java.awt.Point cursorLocation = java.awt.MouseInfo.getPointerInfo().getLocation();
-        double cursorX = cursorLocation.getX();
-        double cursorY = cursorLocation.getY();
+        int cursorX = (int)cursorLocation.getX();
+        int cursorY = (int)cursorLocation.getY();
+        
+        Message message = new Message(); //!TODO use another Ctor
+        
+        //!TODO implement
+        /*
+        message. = cursorX;
+        message. = cursorY;
+        */
+        
+        messenger.sendMessage(message);
         
         //System.out.println(cursorX);
+        //ship.move((int)cursorX, (int)cursorY);
     }
 
     @Override
@@ -98,18 +125,15 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
             loadPosData();
         }
         
-        //System.out.println("Repaint0");
         repaint();
     }
     
     @Override
     protected void paintComponent(java.awt.Graphics g) {
         
-        System.out.println("Repaint1");
-        
         super.paintComponent(g);
         
-        System.out.println("Repaint2");
+        System.out.println("Repaint");
         
         if (inGame) {
             //ship.move(150, 150);
