@@ -48,6 +48,10 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         setBackground(java.awt.Color.black);
         loadTextures();
         initRendering();
+        
+        //setPreferredSize();
+        //setMaximumSize();
+        setSize(1280, 720); //! TODO refactor
     }
     
     public final void loadTextures() {
@@ -91,12 +95,37 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
             loadPosData();
         }
         
+        //System.out.println("Repaint0");
         repaint();
     }
     
     @Override
     protected void paintComponent(java.awt.Graphics g) {
+        
+        System.out.println("Repaint1");
+        
         super.paintComponent(g);
+        
+        System.out.println("Repaint2");
+        
+        //if (inGame) {
+            g.drawImage(shipTexture, shipX, shipY, this);
+            
+            for (int i = 0; i < nLets; i++) {
+                g.drawImage(letTexture, letX[i], letY[i],this);
+            }
+        //}
+    }
+    
+    /*
+    @Override
+    public void paint(java.awt.Graphics g) {
+        
+        System.out.println("Repaint1");
+        
+        super.paint(g);
+        
+        System.out.println("Repaint2");
         
         if (inGame) {
             g.drawImage(shipTexture, shipX, shipY, this);
@@ -106,6 +135,7 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
             }
         }
     }
+    */
     
     /**
      * This method is called from within the constructor to initialize the form.
