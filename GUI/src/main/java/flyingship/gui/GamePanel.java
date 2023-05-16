@@ -88,6 +88,13 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         
         Message message = messenger.getMessage();
         
+        byte[] byteData = message.get_data(); //!TODO debug
+        java.nio.ByteBuffer byteBuffer = java.nio.ByteBuffer.wrap(byteData);
+        java.nio.IntBuffer intBuffer = byteBuffer.asIntBuffer();
+        int[] intData = new int[(MAXLETS+1)*4+1];
+        intBuffer.get(intData);
+        
+        
         //!TODO implement
         /*
         ship.move(,);
@@ -107,17 +114,15 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         int cursorX = (int)cursorLocation.getX();
         int cursorY = (int)cursorLocation.getY();
         
-        byte[] data; // = new byte[2*SIZEOF_INT];
-        //(int)data[0] = cursorX;
+        int[] cursorPos = { cursorX, cursorY };
+
+        java.nio.ByteBuffer byteBuffer = java.nio.ByteBuffer.allocate(cursorPos.length * 8); //!TODO debug
+        java.nio.IntBuffer intBuffer = byteBuffer.asIntBuffer();
+        intBuffer.put(cursorPos);
+
+        //buffer.putInt(cursorX);
         
-        Message message = new Message(MessagesTypes.SendInfo.value(), SenderIds.Backend.value(), data);
-        
-        //!TODO implement
-        /*
-        message. = cursorX;
-        message. = cursorY;
-        */
-        
+        Message message = new Message(MessagesTypes.SendInfo.value(), SenderIds.Backend.value(), byteBuffer.array());
         messenger.sendMessage(message);
         
         //System.out.println(cursorX);
