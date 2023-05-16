@@ -135,9 +135,6 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         System.out.println("Repaint");
         
         if (inGame) {
-            //ship.move(150, 150);
-            //ship.resize(100,100);
-            //ship.setTexture(shipTexture);
             ship.draw(g, this);
             
             for (int i = 0; i < nLets; i++) {
