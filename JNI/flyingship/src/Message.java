@@ -37,6 +37,16 @@ public class Message {
         data = new byte[DATA_LEN];
         System.arraycopy(msg, 3, data, 0, DATA_LEN);
     }
+    
+    public Message(byte msg_type, byte msg_receiver, byte[] msg_data)
+    {
+        if(msg_data.length != MSG_LEN){return;}
+
+        type = msg_type;;
+        receiver = msg_receiver;
+        data = new byte[DATA_LEN];
+        System.arraycopy(msg_data, 0, data, 0, DATA_LEN);
+    }
 
     /**
      * Sets data if it is less than DATA_LEN bytes long<p>

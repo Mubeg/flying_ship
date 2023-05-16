@@ -18,6 +18,9 @@ package flyingship.gui;
 
 //import javax.swing.*;
 //import java.awt.*;
+//import JNI.flyingship.src.*;
+import JNI.flyingship.src.Messenger;
+import JNI.flyingship.src.Message;
 
 /**
  *
@@ -25,19 +28,22 @@ package flyingship.gui;
  */
 public class GamePanel extends javax.swing.JPanel implements java.awt.event.ActionListener {
 
-    private final int PANELSIZE = 600;
+    private final int UPDATEINTERVAL = 100;
     private final int MAXLETS = 400;
     private final String imgDir = "img/";
     
     private java.awt.Image shipTexture;
     private java.awt.Image letTexture;
-    private int shipX;
-    private int shipY;
-    private int[] letX = new int[MAXLETS];
-    private int[] letY = new int[MAXLETS];
+    
+    private GameEntity ship;
+    private GameEntity[] lets;
+
     private int nLets;
+    
     private javax.swing.Timer tickTimer;
     private boolean inGame;
+    
+    private Messenger messenger;
     
     /**
      * Creates new form GamePanel
@@ -58,30 +64,57 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
     }
     
     public final void initRendering() {
-        shipX = 200;
-        shipY = 200;
+        
+        ship = new GameEntity(shipTexture, 100, 100, 70, 70);
+        lets = new GameEntity[MAXLETS];
+        for (int i = 0; i < MAXLETS; i++) {
+            lets[i] = new GameEntity(letTexture, 200, 200, 50, 50);
+        }
+        
+        messenger = new Messenger((byte)3);
+        
         nLets = 0;
         inGame = true;
         
-        tickTimer = new javax.swing.Timer(100, this);
+        tickTimer = new javax.swing.Timer(UPDATEINTERVAL, this);
         tickTimer.start();
     }
     
     public void loadPosData() {
-        //!TODO implement JNI receive
         
-        shipX = 300;
-        shipY = 350;
+        Message message = messenger.getMessage();
+        
+        //!TODO implement
+        /*
+        ship.move(,);
+        ship.resize(,);
+        
+        nLets = ;
+        for (int i = 0; i < nLets; i++) {
+            lets[i].move(,);
+            lets[i].resize(,);
+        }
+        */
     }
     
     public void sendCursor() {
-        //!TODO implement JNI send
         
         java.awt.Point cursorLocation = java.awt.MouseInfo.getPointerInfo().getLocation();
-        double cursorX = cursorLocation.getX();
-        double cursorY = cursorLocation.getY();
+        int cursorX = (int)cursorLocation.getX();
+        int cursorY = (int)cursorLocation.getY();
+        
+        Message message = new Message(); //!TODO use another Ctor
+        
+        //!TODO implement
+        /*
+        message. = cursorX;
+        message. = cursorY;
+        */
+        
+        messenger.sendMessage(message);
         
         //System.out.println(cursorX);
+        //ship.move((int)cursorX, (int)cursorY);
     }
 
     @Override
@@ -96,13 +129,16 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
     
     @Override
     protected void paintComponent(java.awt.Graphics g) {
+        
         super.paintComponent(g);
         
+        System.out.println("Repaint");
+        
         if (inGame) {
-            g.drawImage(shipTexture, shipX, shipY, this);
+            ship.draw(g, this);
             
             for (int i = 0; i < nLets; i++) {
-                g.drawImage(letTexture, letX[i], letY[i],this);
+                lets[i].draw(g, this);
             }
         }
     }
