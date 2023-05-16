@@ -8,5 +8,12 @@ public enum SenderIds {
     Bad,
     Overseer,
     Backend,
-    Frontend;
+    Frontend,
+    Database,
+    Logger,
+    MessengingSystem;
+    
+    public byte value(){
+        return (byte) ordinal();
+    }
 }

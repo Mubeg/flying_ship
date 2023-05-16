@@ -15,16 +15,26 @@ namespace msg{
         Bad,
         Overseer,
         Backend,
-        Frontend
+        Frontend,
+        Database,
+        Logger,
+        MessengingSystem
     };
 
     enum MessagesTypes {
-        Bad, // = 0
+        BadType,
         RequestSettings,
         SettingsUpdate,
         Pause,
         Stop,
-        Resume
+        Resume,
+        UpdateFrame,
+        Checkin,
+        ReCheckin,
+        RequestInfo,
+        SendInfo,
+        End,
+        StartGame,
     };
 
 }

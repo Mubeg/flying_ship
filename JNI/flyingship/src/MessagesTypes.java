@@ -10,5 +10,17 @@ public enum MessagesTypes {
     SettingsUpdate,
     Pause,
     Stop,
-    Resume;
+    Resume,
+    UpdateFrame,
+    Checkin,
+    ReCheckin,
+    RequestInfo,
+    SendInfo,
+    End,
+    StartGame,
+    PlayerLogIn;
+   
+    public byte value(){
+        return (byte) ordinal();
+    }
 }
