@@ -10,7 +10,7 @@ libnative.so: clean java backend.o
 	$(CXX) $(CXXFLAGS) $(CXX_INCLUDES) -o $(BUILD_DIR)libnative.so $(SRC_DIR)messenger.cpp $(BUILD_DIR)*.o
 
 backend.o:
-	$(CXX) $(CXX_INCLUDES) -c $(BACK_SRC_DIR)*.cpp
+	$(CXX) $(CXX_INCLUDES) -c -fPIC $(BACK_SRC_DIR)*.cpp
 	mv *.o ${BUILD_DIR}
 
 java:
