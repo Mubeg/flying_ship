@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
  * MSG_LEN = 103
  * DATA_LEN = 100
  */
-class Message {
+public class Message {
 
     private static int DATA_LEN = 100;
     public static int MSG_LEN = 103;
@@ -34,6 +34,16 @@ class Message {
         sender = msg[2];
         data = new byte[DATA_LEN];
         System.arraycopy(msg, 3, data, 0, DATA_LEN);
+    }
+    
+    public Message(byte msg_type, byte msg_receiver, byte[] msg_data)
+    {
+        if(msg_data.length != MSG_LEN){return;}
+
+        type = msg_type;;
+        receiver = msg_receiver;
+        data = new byte[DATA_LEN];
+        System.arraycopy(msg_data, 0, data, 0, DATA_LEN);
     }
 
     public void set_data(String msg)
