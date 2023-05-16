@@ -30,6 +30,7 @@ public class MainFrame extends javax.swing.JFrame {
         
         setTitle("Flying Ship");
         setSize(1280,720);
+        setResizable(false);
         //setLocation(400,400);
         
         add(new GamePanel());
