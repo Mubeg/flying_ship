@@ -1,32 +1,43 @@
 package JNI.flyingship.src;
 
-import flyingship.gui.GUI;
+import java.io.IOException;
+import java.util.logging.*;
 
 /**
  *
  * @author Mubeg
  */
-public class FlyingShip {
+public class SuperLogger extends Thread {
 
     final static MessagesTypes[] types = MessagesTypes.values();
     final static SenderIds[] senders = SenderIds.values();
 
-    public static void main(String[] args) {
+    public void run(){
 
-        Messenger messenger = new Messenger(SenderIds.Overseer.value());
-        Backend backend = new Backend();
-        GUI gui = new GUI();
-        Database database = new Database();
-        SuperLogger logger = new SuperLogger();
-        backend.start();
-        gui.start();
-        database.start();
-        logger.start();
+        Logger log = Logger.getLogger("SuperLogger");
+        log.setLevel(Level.ALL);
+        FileHandler fh;
+
+        try {  
+
+            // This block configure the logger with handler and formatter  
+            fh = new FileHandler(System.getProperty("user.dir") + "flyingship.log");  
+            log.addHandler(fh);
+            SimpleFormatter formatter = new SimpleFormatter();  
+            fh.setFormatter(formatter);    
+    
+        } catch (SecurityException e) {  
+            e.printStackTrace();  
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        }  
+
+        Messenger messenger = new Messenger(SenderIds.Logger.value());
 
         Message msg = new Message();
         msg.type = MessagesTypes.Checkin.value();
         msg.receiver = SenderIds.Overseer.value();
-        msg.set_data("Overseer, cheking in.");
+        msg.set_data("SuperLogger, cheking in.");
         messenger.sendMessage(msg);
         
         boolean is_running = true;
@@ -49,9 +60,12 @@ public class FlyingShip {
                     is_running = false;
                 break;
                 default:
+                    log.info(String.format("Msg of type %d, from sender %d with data %s\n", msg.type, msg.sender, msg.get_data_string()));
                 break;
 
             }
         };
-    }
+
+    } 
+
 }

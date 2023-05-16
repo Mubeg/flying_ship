@@ -1,24 +1,42 @@
-
 #include "backend.h"
 
 JNIEXPORT void JNICALL Java_JNI_flyingship_src_Backend_run
     (JNIEnv *env, jobject obj)
 {
-    Backend backend{};
+    Backend *backend = new Backend();
+    backend->run();
+    delete backend;
 }
 
 
-Backend::Backend() : messenger(1) //messenger's id for backend is 1
+Backend::Backend() : messenger(msg::Backend), env(messenger), env_thread((&Environment::run), env)
 {
-    message_t msg = {};
-    msg.type = 1;
-    msg.receiver = 2;
-    strcpy(msg.data, "Hello, GUI!!!");
-    messenger.send_message(msg);
     
+}
+
+void Backend::run(){
+
+    message_t msg = {};
+    bool running = true;
     do{
         msg = messenger.get_message();
-    } while(msg.type == 0); //while no messages availible
+        switch(msg.type){
+            case msg::Bad:
+                break;
+            case msg::Pause:
+                env.pause();
+                break;
+            case msg::Resume:
+                env.resume();
+                break;
+            case msg::Stop:
+                env.stop();
+                running = false;
+                break;
+            default:
+                break;
 
-    printf("Received message: %s\n", msg.data);
+        }
+        std::this_thread::sleep_for(BACKEND_SLEEP_TIME);
+    } while(running);
 }

@@ -5,7 +5,9 @@ import java.nio.charset.StandardCharsets;
 /**
  *
  * @author Mubeg
+ * <p>
  * MSG_LEN = 103
+ * <p>
  * DATA_LEN = 100
  */
 public class Message {
@@ -46,6 +48,10 @@ public class Message {
         System.arraycopy(msg_data, 0, data, 0, DATA_LEN);
     }
 
+    /**
+     * Sets data if it is less than DATA_LEN bytes long<p>
+     * Encoding used is ISO_8859_1
+     */
     public void set_data(String msg)
     {
         if(msg.length() < DATA_LEN)
@@ -54,6 +60,10 @@ public class Message {
         }
     }
 
+    /**
+     * Sets data<p>
+     * Does not perform length check
+     */
     public void set_data(byte[] msg)
     {
         data = msg;
@@ -63,11 +73,19 @@ public class Message {
         return data;
     }
 
+    /**
+     * Gets data
+     * @return data encoded with ISO_8859_1 from bytes
+     */
     public String get_data_string()
     {
         return new String(data, StandardCharsets.ISO_8859_1);
     }
 
+    /**
+     * Makes bytearray from class fields
+     * @return new bytearray[MSG_LEN]
+     */
     public byte[] toBytes()
     {
         byte[] msg = new byte[Message.MSG_LEN];
