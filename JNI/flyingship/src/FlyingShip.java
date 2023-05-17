@@ -34,6 +34,16 @@ public class FlyingShip {
         msg.receiver = SenderIds.Overseer.value();
         msg.set_data("Overseer, cheking in.");
         messenger.sendMessage(msg);
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        msg.type = MessagesTypes.StartGame.value();
+        msg.receiver = SenderIds.Backend.value();
+        messenger.sendMessage(msg);
         
         boolean is_running = true;
         while(is_running){

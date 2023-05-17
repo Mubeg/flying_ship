@@ -67,13 +67,13 @@ public class SuperLogger extends Thread {
                         is_running = false;
                     break;
                     default:
-                        log.log(Level.FINEST, String.format("Msg of type %d, from sender %d with data %s\n", msg.type, msg.sender, msg.get_data_string()));
+                        log.log(Level.FINEST, String.format("Msg of type %d, from sender %d with data %d\n", msg.type, msg.sender, msg.get_data()[0]));
                     break;
 
                 }
             }
             try {
-                Thread.sleep(50);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

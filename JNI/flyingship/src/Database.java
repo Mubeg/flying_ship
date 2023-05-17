@@ -22,8 +22,8 @@ public class Database extends Thread {
     final static SenderIds[] senders = SenderIds.values();
     ArrayList<Replay> replays;
     ArrayList<Player> players; 
-    Integer currentPlayerID;
-    Integer currentReplayID;
+    Integer currentPlayerID = 0;
+    Integer currentReplayID = 0;
 
     public Database(){
         replays = new ArrayList<Replay>();
@@ -122,6 +122,9 @@ public class Database extends Thread {
                     break;
                     case UpdateFrame:
                         replays.get(currentReplayID).add_frame(msg);
+                    break;
+                    case GameOver:
+                        currentReplayID += 1;
                     break;
                     case ReCheckin:
                         msg.receiver = msg.sender;

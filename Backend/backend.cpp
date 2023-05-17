@@ -1,6 +1,8 @@
 #include "backend.h"
 
 int X_Agent = DEFAULT_SCREEN_WIDTH / 2;
+bool is_paused = true;
+bool is_running = true;
 
 JNIEXPORT void JNICALL Java_JNI_flyingship_src_Backend_run
     (JNIEnv *env, jobject obj)
@@ -25,17 +27,20 @@ void Backend::run(){
             case msg::Bad:
                 break;
             case msg::Pause:
-                env.pause();
+                is_paused = true;
                 break;
             case msg::Resume:
-                env.resume();
+                is_paused = false;
                 break;
             case msg::Stop:
-                env.stop();
+                is_running = false;
                 running = false;
                 break;
+            case msg::StartGame:
+                is_paused = false;
+                break;
             case msg::UpdateCursor:                                   //Нужен один int координата курсора по оси x
-                env.update_agent_pos(msg.data[0]);
+                X_Agent = msg.data[0];
                 break;
             default:
                 break;
