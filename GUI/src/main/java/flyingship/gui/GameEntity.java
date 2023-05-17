@@ -60,6 +60,22 @@ public class GameEntity {
     
     public void draw(java.awt.Graphics g, java.awt.image.ImageObserver observer) {
         
+        /*
+        System.out.println("[GUI] draw");
+        System.out.println("[GUI] x = " + x);
+        System.out.println("[GUI] y = " + y);
+        System.out.println("[GUI] w = " + width);
+        System.out.println("[GUI] h = " + height);
+        */
+        
         g.drawImage(texture, x, y, width, height, observer);
+    }
+    
+    public void print() {
+        System.out.println("[GUI] print" );
+        System.out.println("[GUI] x =" + x );
+        System.out.println("[GUI] y =" + y );
+        System.out.println("[GUI] w =" + width );
+        System.out.println("[GUI] h =" + height );
     }
 }

@@ -112,7 +112,7 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         
         this.nLets = nLets;
         for(int i = start; i < nLets+start; i+=3) {
-            setLet(i, i, i+1, i+2);
+            setLet(i, parameters[i], parameters[i+1], parameters[i+2]);
         }
     }
     
@@ -164,6 +164,12 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
             for (int i = 0; i < nLets; i++) {
                 getLet(i).draw(g, this);
             }
+        }
+        
+        System.out.println("[GUI] paintComponent nLets = " + nLets);
+        System.out.println("[GUI] paintComponent");
+        for(int i = 0; i < nLets; i++) {
+            getLet(i).print();
         }
     }
     
