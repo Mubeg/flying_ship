@@ -42,6 +42,14 @@ int Object::return_y(){
     return m_posY;
 }
 
+int Object::return_x(){
+    return m_posX;
+}
+
+int Object::return_size(){
+    return m_size;
+}
+
 void Object::print_obj(){
     std::cout << "x: " << m_posX << " , y: " << m_posY << " , size: " << m_size << ", id: " << id <<std::endl;
 }

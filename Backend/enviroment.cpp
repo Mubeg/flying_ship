@@ -1,12 +1,12 @@
 #include "environment.h"
 
-Environment::Environment(Messenger messenger_e) : messenger(messenger_e), agent(0, DEFAULT_AGENT_SIZE, 0){
+Environment::Environment(Messenger messenger_e) : messenger(messenger_e), agent(200, DEFAULT_AGENT_SIZE, 0) {
     unique_id[0] = true;
     std::vector<Object *> elem;
     all_objects.push_back(elem);
 }
 
-void Environment::run(){
+void Environment::run() {
     
     int delet_elements = 0;
     int stop = 0;
@@ -14,13 +14,14 @@ void Environment::run(){
     int new_elems = LAYER_HEIGHT;
 
     while(is_running){
-        if(is_paused){
+
+        if(is_paused) {
             std::this_thread::sleep_for(ENV_PAUSE_SLEEP);
             continue;
         }
 
         std::vector<Object *>elem;
-        for(int i = 0; i < N_Elem_In_Layer; i++){
+        for(int i = 0; i < N_Elem_In_Layer; i++) {
             elem.push_back(nullptr);
         }
         if (all_objects[0].empty() == true) {
@@ -43,6 +44,16 @@ void Environment::run(){
                         continue;
                     }
                     else {
+
+                        if (agent.check_collision(all_objects[j][k]) == 1) {
+                            std::cout << "I crashed :(" << std::endl;
+                            is_running = false;
+                            message_t msg = {};
+                            msg.receiver = msg::Frontend;
+                            msg.type = msg::GameOver;
+                            messenger.send_message(msg);
+                        }
+
                         all_objects[j][k]->sum_pos_y(SHIFT);
                         if ((all_objects[j][k]->return_y() - MAX_SIZE) > DEFAULT_SCREEN_HEIGHT) {
                             delet_elements++;
@@ -70,28 +81,43 @@ void Environment::run(){
             }
         }
 
-        std::cout << "THERE ARE " << num_elem << " OF US NOW" << std::endl;
-        print_all_objects();
-        std::cout << std::endl;
+        // std::cout << "THERE ARE " << num_elem << " OF US NOW" << std::endl;
+        // print_all_objects();
+        // std::cout << std::endl;
 
         if (stop == 70) {
             break;
         }
         stop += 1;
+
+        message_t msg = {};
+        msg.type = msg::UpdateFrame;
+        msg.receiver = msg::Frontend;
+        create_array_to_send(&msg);
+        // std::cout << "ARRAY!" << std::endl;
+        // for (int i = 0; i < 100; ++i) {
+        //     std::cout << arr[i] << " ";
+        // }
+        //std::cout << std::endl;
+        messenger.send_message(msg);
         std::this_thread::sleep_for(ENV_PAUSE_SLEEP);
         
     }
 }
 
-void Environment::pause(){
+void Environment::update_agent_pos(int new_posX) {
+    agent.change_pos_x(new_posX);
+}
+
+void Environment::pause() {
     is_paused = true;
 }
 
-void Environment::resume(){
+void Environment::resume() {
     is_paused = false;
 }
 
-void Environment::stop(){
+void Environment::stop() {
     is_running = false;
 }
 
@@ -101,4 +127,37 @@ void Environment::print_all_objects() {
         print_objects(all_objects[i]);
         std::cout << std::endl;
     }
+}
+
+void Environment::create_array_to_send(message_t *msg) {
+    
+    int pos = 0;
+    int num_elem = 0;
+
+    msg->data[0] = agent.return_x();
+    msg->data[1] = agent.return_y();
+    msg->data[2] = agent.return_size();
+
+    for (int i = 0; i < all_objects.size(); ++i) {
+
+        if (all_objects[i].empty() == true) {
+            continue;
+        }
+        
+        for(int j = 0; j < N_Elem_In_Layer; ++j) {
+                    
+            if (all_objects[i][j] == nullptr) {
+                continue;
+            }
+            else {
+                pos = 4 + (i * N_Elem_In_Layer + j) * 3;
+                msg->data[pos] = all_objects[i][j]->return_x();
+                msg->data[pos + 1] = all_objects[i][j]->return_y();
+                msg->data[pos + 2] = all_objects[i][j]->return_size();
+                num_elem++;
+            }
+        }
+    }
+
+    msg->data[3] = num_elem;
 }

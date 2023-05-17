@@ -1,10 +1,6 @@
 
 #include "agent.h"
 
-void Agent::change_pos_x(int posX){
-    Object::change_pos_x(posX);
-}
-
 int Agent::not_enough_space(Object* one, Object* two){
 
     assert(one != nullptr);

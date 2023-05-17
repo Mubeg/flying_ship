@@ -112,9 +112,6 @@ public class GameMsgHandler implements Runnable {
     
     protected void handleUpdateFrame(Message message) {
         
-        //byte[] byteData = message.get_data();
-        //int[] intData = byteToInt(byteData);
-        
         int[] intData = message.get_data();
         
         panel.setShip(intData[0], intData[1], intData[2], intData[3]);
