@@ -49,9 +49,9 @@ public class GameMsgHandler implements Runnable {
         while(true) {
             
             message = messenger.getMessage();
-            //if(message != null){
+            if(message != null){
                 handleMessage(message);
-            //}
+            }
             
             try {
                 java.lang.Thread.sleep(500);
