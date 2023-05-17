@@ -92,60 +92,6 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         tickTimer.start();
     }
     
-    public void loadPosData() {
-        
-        /*
-        Message message = messenger.getMessage();
-        while ( message != null) {
-            
-            
-            message = messenger.getMessage();
-        }
-        */
-        
-        //!TODO debug
-        /*
-        byte[] byteData = message.get_data();
-        java.nio.ByteBuffer byteBuffer = java.nio.ByteBuffer.wrap(byteData);
-        java.nio.IntBuffer intBuffer = byteBuffer.asIntBuffer();
-        int[] intData = new int[(MAXLETS+1)*4+1];
-        intBuffer.get(intData);
-        */
-        
-        //!TODO implement
-        /*
-        ship.move(,);
-        ship.resize(,);
-        
-        nLets = ;
-        for (int i = 0; i < nLets; i++) {
-            lets[i].move(,);
-            lets[i].resize(,);
-        }
-        */
-    }
-    
-    public void sendCursor() {
-        
-        java.awt.Point cursorLocation = java.awt.MouseInfo.getPointerInfo().getLocation();
-        int cursorX = (int)cursorLocation.getX();
-        int cursorY = (int)cursorLocation.getY();
-        
-        
-        int[] cursorPos = { cursorX, cursorY };
-        
-        /*
-        byte[] arr = byteBuffer.array();
-        System.out.println(java.util.Arrays.toString(arr));
-        */
-        
-        Message message = new Message(MessagesTypes.SendInfo.value(), SenderIds.Backend.value(), cursorPos);
-        messenger.sendMessage(message);
-        
-        //System.out.println(cursorX);
-        //ship.move((int)cursorX, (int)cursorY);
-    }
-    
     public synchronized void setShip(int x, int y, int width, int height) {
         
         ship.move(x, y);
