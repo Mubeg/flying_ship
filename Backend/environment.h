@@ -11,7 +11,7 @@
 #include <ctime>
 class Environment{
 
-    bool is_paused = false;
+    bool is_paused = true;
     bool is_running = true;
     unsigned int timer = 0;
     std::chrono::milliseconds time_tick_speed = DEFAULT_TIME_TICK_SPEED;
