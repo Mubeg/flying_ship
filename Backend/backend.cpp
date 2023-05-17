@@ -34,6 +34,9 @@ void Backend::run(){
                 env.stop();
                 running = false;
                 break;
+            case msg::StartGame:
+                env.resume();
+                break;
             case msg::UpdateCursor:                                   //Нужен один int координата курсора по оси x
                 env.update_agent_pos(msg.data[0]);
                 break;
