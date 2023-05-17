@@ -49,9 +49,9 @@ public class GameMsgHandler implements Runnable {
         while(true) {
             
             message = messenger.getMessage();
-            //if(message != null){
+            if(message != null){
                 handleMessage(message);
-            //}
+            }
             
             try {
                 java.lang.Thread.sleep(500);
@@ -64,12 +64,7 @@ public class GameMsgHandler implements Runnable {
     
     protected void handleMessage(Message message) {
         
-        if(message == null) {
-            
-            System.out.println("handleMessage: null message");
-            return;
-        }
-        
+        System.out.println(String.format("Message type is %d", message.type));
         switch(types[message.type]) {
             case BadType:
                 break;
