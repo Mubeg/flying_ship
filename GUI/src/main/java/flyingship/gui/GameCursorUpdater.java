@@ -46,7 +46,7 @@ public class GameCursorUpdater implements Runnable {
                 java.lang.Thread.sleep(500);
             }
             catch(Exception e){
-                System.out.println("GameCursorUpdater sleep exception");
+                System.out.println("[GUI] GameCursorUpdater sleep exception");
             }
         }
     }
