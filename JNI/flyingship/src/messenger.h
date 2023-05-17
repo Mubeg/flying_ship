@@ -35,7 +35,8 @@ namespace msg{
         SendInfo,
         End,
         StartGame,
-        PlayerLogIn
+        PlayerLogIn,
+        GameOver
     };
 
 }

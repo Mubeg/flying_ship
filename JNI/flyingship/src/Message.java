@@ -45,6 +45,7 @@ public class Message {
         type = msg_type;;
         receiver = msg_receiver;
         data = new byte[DATA_LEN];
+        System.out.println(data);
         System.arraycopy(msg_data, 0, data, 0, DATA_LEN);
     }
 

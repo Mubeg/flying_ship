@@ -135,7 +135,7 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         */
         
         Message message = new Message(MessagesTypes.SendInfo.value(), SenderIds.Backend.value(), byteBuffer.array());
-        //messenger.sendMessage(message);
+        messenger.sendMessage(message);
         
         //System.out.println(cursorX);
         //ship.move((int)cursorX, (int)cursorY);
