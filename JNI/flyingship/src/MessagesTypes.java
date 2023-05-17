@@ -19,8 +19,8 @@ public enum MessagesTypes {
     End,
     StartGame,
     PlayerLogIn,
-    GameOver,
-    UpdateCursor;
+    UpdateCursor,
+    GameOver;
    
     public int value(){
         return (int) ordinal();
