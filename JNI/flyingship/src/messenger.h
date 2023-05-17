@@ -36,7 +36,8 @@ namespace msg{
         End,
         StartGame,
         PlayerLogIn,
-        GameOver
+        GameOver,
+        UpdateCursor
     };
 
 }

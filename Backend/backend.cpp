@@ -1,17 +1,13 @@
 #include "backend.h"
 
+int X_Agent = DEFAULT_SCREEN_WIDTH / 2;
+
 JNIEXPORT void JNICALL Java_JNI_flyingship_src_Backend_run
     (JNIEnv *env, jobject obj)
 {
-    Backend *backend = new Backend();
+    Backend * backend = new Backend();
     backend->run();
     delete backend;
-}
-
-
-Backend::Backend() : messenger(msg::Backend), env(messenger), env_thread((&Environment::run), env)
-{
-    
 }
 
 void Backend::run(){
@@ -32,6 +28,9 @@ void Backend::run(){
             case msg::Stop:
                 env.stop();
                 running = false;
+                break;
+            case msg::Cursor:                                   //Нужен один int координата курсора по оси x
+                X_Agent = (reinterpret_cast<int *> (msg.data))[0];
                 break;
             default:
                 break;
