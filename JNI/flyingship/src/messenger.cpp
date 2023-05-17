@@ -20,20 +20,26 @@ JNIEXPORT jbyte JNICALL Java_JNI_flyingship_src_Messenger_getMessageNative
 	jchar err = JNI_ERR;
 
 	messages_mutex.lock();
-
+	bool success = false;
 	for(auto msg = messages.begin(); msg != messages.end(); msg++){
 		if(msg->receiver == receiver){
 			std::memcpy(buff, &(*msg), sizeof(message_t));
 			messages.erase(msg);
 			err = 0;
 			break;
+			success = true;
 		}
 	}
 
 	messages_mutex.unlock();
 
 	#ifdef DEBUG
-	printf("Getting message with type %d, reciever %d, sender %d\nData[%d]:\n%s\n", ((message_t *)buff)->type, ((message_t *)buff)->receiver, ((message_t *)buff)->sender, DATA_LEN, ((message_t *)buff)->data);
+	if(success){
+		printf("Getting message with type %d, reciever %d, sender %d\nData[%d]:\n%s\n", ((message_t *)buff)->type, ((message_t *)buff)->receiver, ((message_t *)buff)->sender, DATA_LEN, ((message_t *)buff)->data);
+	}
+	else{
+		printf("#%d tried to get message, but failed\n", receiver);
+	}
 	#endif
 
 	(env)->ReleaseByteArrayElements(jbuff, buff, 0);
@@ -49,6 +55,9 @@ JNIEXPORT jbyte JNICALL Java_JNI_flyingship_src_Messenger_getMessageNative
 void _send_message(message_t *msg)
 {
 
+	#ifdef DEBUG
+		printf("Sending message with type %d, reciever %d, sender %d\nData[%d]:\n%s\n", msg->type, msg->receiver, msg->sender, DATA_LEN, msg->data);
+	#endif
 	switch (msg->receiver)
 	{
 		case msg::MessengingSystem:
@@ -77,7 +86,7 @@ void _send_message(message_t *msg)
 				case msg::Checkin:
 				checking_in = true;
 				case msg::ReCheckin:
-					switch(msg->receiver)
+					switch(msg->sender)
 					{
 						case msg::Backend:
 							Backend_is_active = checking_in;
@@ -160,7 +169,7 @@ message_t Messenger::get_message()
 		if(msg->receiver == my_id){
 			message = *msg;
 			#ifdef DEBUG
-			printf("Getting message with type %d, reciever %d, sender %d\nData[%d]:\n%s\n", msg->type, msg->receiver, msg->sender, DATA_LEN, msg->data);
+			printf("C++ Getting message with type %d, reciever %d, sender %d\nData[%d]:\n%s\n", msg->type, msg->receiver, msg->sender, DATA_LEN, msg->data);
 			#endif
 			messages.erase(msg);
 			break;

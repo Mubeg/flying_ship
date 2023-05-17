@@ -21,10 +21,16 @@ public class SuperLogger extends Thread {
         try {  
 
             // This block configure the logger with handler and formatter  
-            fh = new FileHandler(System.getProperty("user.dir") + "flyingship.log");  
+            fh = new FileHandler(System.getProperty("user.dir") + "/flyingship.log");  
             log.addHandler(fh);
             SimpleFormatter formatter = new SimpleFormatter();  
             fh.setFormatter(formatter);    
+
+            Runtime.getRuntime().addShutdownHook(new Thread() {
+                public void run() {    
+                    fh.close();
+                }
+            });
     
         } catch (SecurityException e) {  
             e.printStackTrace();  
@@ -43,26 +49,33 @@ public class SuperLogger extends Thread {
         boolean is_running = true;
         while(is_running){
             msg = messenger.getMessage();
-            switch(types[msg.type]){
-                case ReCheckin:
-                    msg.receiver = msg.sender;
-                    msg.type = MessagesTypes.Checkin.value();
-                    messenger.sendMessage(msg);
-                    break;
-                case End:
-                    byte sender_id = msg.sender;
-                    for(byte i = 1; i < senders.length; i++){
-                        if(i != sender_id){
-                            msg.receiver = i; 
-                            messenger.sendMessage(msg);       
+            if(msg != null){
+                switch(types[msg.type]){
+                    case ReCheckin:
+                        msg.receiver = msg.sender;
+                        msg.type = MessagesTypes.Checkin.value();
+                        messenger.sendMessage(msg);
+                        break;
+                    case End:
+                        byte sender_id = msg.sender;
+                        for(byte i = 1; i < senders.length; i++){
+                            if(i != sender_id){
+                                msg.receiver = i; 
+                                messenger.sendMessage(msg);       
+                            }
                         }
-                    }
-                    is_running = false;
-                break;
-                default:
-                    log.info(String.format("Msg of type %d, from sender %d with data %s\n", msg.type, msg.sender, msg.get_data_string()));
-                break;
+                        is_running = false;
+                    break;
+                    default:
+                        log.log(Level.FINEST, String.format("Msg of type %d, from sender %d with data %s\n", msg.type, msg.sender, msg.get_data_string()));
+                    break;
 
+                }
+            }
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         };
 
