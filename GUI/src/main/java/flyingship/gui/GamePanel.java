@@ -43,6 +43,7 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
     private GameEntity[] lets;
     
     private Thread handler;
+    private Thread cursorUpdater;
 
     private int nLets;
     
@@ -81,6 +82,8 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         
         handler = new Thread(new GameMsgHandler(this, messenger));
         handler.start();
+        cursorUpdater = new Thread(new GameCursorUpdater(messenger));
+        cursorUpdater.start();
         
         nLets = 0;
         inGame = true;
@@ -173,10 +176,11 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
 
     @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
+        
+        /*
         if (inGame) {
-            sendCursor();
-            loadPosData();
         }
+        */
         
         repaint();
     }

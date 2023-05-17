@@ -49,11 +49,26 @@ public class GameMsgHandler implements Runnable {
         while(true) {
             
             message = messenger.getMessage();
-            handleMessage(message);
+            if(message != null){
+                handleMessage(message);
+            }
+            
+            try {
+                java.lang.Thread.sleep(100);
+            }
+            catch(Exception e){
+                System.out.println("GameMsgHandler sleep exception");
+            }
         }
     }
     
     protected void handleMessage(Message message) {
+        
+        if(message == null) {
+            
+            System.out.println("handleMessage: null message");
+            return;
+        }
         
         switch(types[message.type]) {
             case Bad:
@@ -105,7 +120,7 @@ public class GameMsgHandler implements Runnable {
         
         java.nio.ByteBuffer byteBuffer = java.nio.ByteBuffer.wrap(byteData);
         java.nio.IntBuffer intBuffer = byteBuffer.asIntBuffer();
-        int[] intData = new int[(MAXLETS+1)*SIZEOF_INT+1];
+        int[] intData = new int[Message.DATA_LEN*SIZEOF_INT];
         intBuffer.get(intData);
         
         return intData;

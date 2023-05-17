@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class Message {
 
-    private static int DATA_LEN = 100;
+    public static int DATA_LEN = 100;
     public static int MSG_LEN = 103;
     public byte type;
     public byte receiver;
