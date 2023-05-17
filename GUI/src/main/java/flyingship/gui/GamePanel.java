@@ -31,8 +31,9 @@ import JNI.flyingship.src.SenderIds;
 public class GamePanel extends javax.swing.JPanel implements java.awt.event.ActionListener {
 
     private final int SIZEOF_INT = 4;
+    private final int COORD_PER_ENTITY = 3;
     
-    private final int UPDATEINTERVAL = 100;
+    private final int UPDATEINTERVAL = 500;
     private final int MAXLETS = 400;
     private final String imgDir = "img/";
     
@@ -72,10 +73,10 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
     
     public final void initRendering() {
         
-        ship = new GameEntity(shipTexture, 100, 100, 70, 70);
+        ship = new GameEntity(shipTexture, 100, 100, 70);
         lets = new GameEntity[MAXLETS];
         for (int i = 0; i < MAXLETS; i++) {
-            lets[i] = new GameEntity(letTexture, 200, 200, 50, 50);
+            lets[i] = new GameEntity(letTexture, 200, 200, 50);
         }
         
         messenger = new Messenger(SenderIds.Frontend.value());
@@ -92,38 +93,12 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         tickTimer.start();
     }
     
-    public synchronized void setShip(int x, int y, int width, int height) {
-        
-        ship.move(x, y);
-        ship.resize(width, height);
+    public synchronized void setShip(int x, int y, int radius) {
+        ship.transform(x, y, radius);
     }
     
-    public synchronized void setShip(int centralX, int centralY, int radius) {
-        
-        int diameter = 2 * radius;
-        int x = centralX - radius;
-        int y = centralY - radius;
-        
-        ship.move(x, y);
-        ship.resize(diameter, diameter);
-    }
-    
-    public synchronized void setLets(int start, int nLets, int[] parameters) {
-        
-        this.nLets = nLets;
-        for(int i = start; i < nLets+start; i+=3) {
-            setLet(i, parameters[i], parameters[i+1], parameters[i+2]);
-        }
-    }
-    
-    public synchronized void setLet(int i, int centralX, int centralY, int radius) {
-        
-        int diameter = 2 * radius;
-        int x = centralX - radius;
-        int y = centralY - radius;
-        
-        lets[i].move(x, y);
-        lets[i].resize(diameter,diameter);
+    public synchronized void setLet(int i, int x, int y, int radius) {
+        lets[i].transform(x, y, radius);
     }
     
     public synchronized GameEntity getShip() {
@@ -132,6 +107,21 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
     
     public synchronized GameEntity getLet(int i) {
         return lets[i];
+    }
+    
+    public synchronized void loadGameEntities(int[] data){ 
+        
+        ship.transform(data[0], data[1], data[2]);
+        nLets = data[0 + COORD_PER_ENTITY];
+        
+        final int startOffset = COORD_PER_ENTITY + 1;
+        int currentDataPos;
+        
+        for(int i = 0; i < nLets; i++) {
+            currentDataPos = startOffset + COORD_PER_ENTITY * i;
+            
+            lets[i].transform(data[currentDataPos], data[currentDataPos + 1], data[currentDataPos + 2]);
+        }
     }
     
     public synchronized void endGame() {
@@ -144,20 +134,14 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
 
     @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
-        
-        /*
-        if (inGame() == true) {
-        }
-        */
-        
+
         repaint();
     }
     
     @Override
     protected void paintComponent(java.awt.Graphics g) {
-        
         super.paintComponent(g);
-                
+
         if (inGame() == true) {
             getShip().draw(g, this);
             

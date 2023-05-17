@@ -120,10 +120,7 @@ public class GameMsgHandler implements Runnable {
         
         System.out.println("[GUI] handleUpdateFrame new message");
         
-        int[] intData = message.get_data();
-        
-        panel.setShip(intData[0], intData[1], intData[2]);
-        panel.setLets(4, intData[3], intData);
+        panel.loadGameEntities(message.get_data());
     }
     
     protected void handleGameOver(Message message) {
