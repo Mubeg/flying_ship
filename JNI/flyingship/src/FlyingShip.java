@@ -23,6 +23,12 @@ public class FlyingShip {
         database.start();
         logger.start();
 
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {    
+        
+            }
+        });
+
         Message msg = new Message();
         msg.type = MessagesTypes.Checkin.value();
         msg.receiver = SenderIds.Overseer.value();
@@ -32,25 +38,32 @@ public class FlyingShip {
         boolean is_running = true;
         while(is_running){
             msg = messenger.getMessage();
-            switch(types[msg.type]){
-                case ReCheckin:
-                    msg.receiver = msg.sender;
-                    msg.type = MessagesTypes.Checkin.value();
-                    messenger.sendMessage(msg);
-                    break;
-                case End:
-                    byte sender_id = msg.sender;
-                    for(byte i = 1; i < senders.length; i++){
-                        if(i != sender_id){
-                            msg.receiver = i; 
-                            messenger.sendMessage(msg);       
+            if(msg != null){
+                switch(types[msg.type]){
+                    case ReCheckin:
+                        msg.receiver = msg.sender;
+                        msg.type = MessagesTypes.Checkin.value();
+                        messenger.sendMessage(msg);
+                        break;
+                    case End:
+                        byte sender_id = msg.sender;
+                        for(byte i = 1; i < senders.length; i++){
+                            if(i != sender_id){
+                                msg.receiver = i; 
+                                messenger.sendMessage(msg);       
+                            }
                         }
-                    }
-                    is_running = false;
-                break;
-                default:
-                break;
+                        is_running = false;
+                    break;
+                    default:
+                    break;
 
+                }
+            }
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         };
     }

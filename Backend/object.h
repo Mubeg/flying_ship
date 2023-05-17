@@ -1,5 +1,9 @@
-#include "constants.h"
 #pragma once
+
+#include "constants.h"
+#include <math.h>
+#include <iostream>
+#include <assert.h>
 
 class Object{
 
@@ -10,9 +14,18 @@ class Object{
     unsigned int m_size;
 
     public:
-    Object(int posX, int posY, unsigned int size, unsigned int unique_id);
+    Object(int posX, int posY, unsigned int size, unsigned int unique_id): m_posX(posX), m_posY(posY), m_size(size), id(unique_id){
+        #ifdef DEBUG
+        printf("Creating object:\nx: %d\ny: %d\nsize: %d\nid: %d\n", m_posX, m_posY, m_size, id);
+        #endif
+    };
     void change_pos_to(int posX, int posY);
+    void change_pos_x(int posX);
+    void change_pos_y(int posY);
     void change_size(unsigned int size);
-    bool check_collision(Object *other);
-    unsigned int distance(Object *other);
+    int check_collision(Object *other);
+    int distance(Object *other);
+    void print_obj();
+    void sum_pos_y(int posY);
+    int return_y();
 };

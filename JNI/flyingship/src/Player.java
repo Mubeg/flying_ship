@@ -6,11 +6,11 @@ package JNI.flyingship.src;
  */
 public class Player {
 
-    private int id;
+    private Integer id;
     private String name;
-    private int highScore;
+    private Integer highScore;
 
-    public Player(int unique_id, String m_name, int m_highScore){
+    public Player(Integer unique_id, String m_name, Integer m_highScore){
         id = unique_id;
         name = m_name;
         highScore = m_highScore;
@@ -20,16 +20,20 @@ public class Player {
         return name;
     }
 
-    public int getHighScore(){
+    public Integer getHighScore(){
         return highScore;
     }
 
-    public void setHighScore(int m_highScore){
+    public void setHighScore(Integer m_highScore){
         highScore = m_highScore;
     }
 
-    public int getID(){
+    public Integer getID(){
         return id;
+    }
+
+    public void setID(Integer m_id){
+        id = m_id;
     }
 
 }

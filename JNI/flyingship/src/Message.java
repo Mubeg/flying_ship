@@ -40,12 +40,12 @@ public class Message {
     
     public Message(byte msg_type, byte msg_receiver, byte[] msg_data)
     {
-        if(msg_data.length != MSG_LEN){return;}
+        if(msg_data.length >= DATA_LEN){return;}
 
         type = msg_type;;
         receiver = msg_receiver;
         data = new byte[DATA_LEN];
-        System.arraycopy(msg_data, 0, data, 0, DATA_LEN);
+        System.arraycopy(msg_data, 0, data, 0, msg_data.length);
     }
 
     /**
