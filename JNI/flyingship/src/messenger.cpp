@@ -9,15 +9,15 @@ bool Frontend_is_active = false;
 bool Database_is_active = false;
 bool Overseer_is_active = false;
 
-JNIEXPORT jbyte JNICALL Java_JNI_flyingship_src_Messenger_getMessageNative
-	(JNIEnv *env, jobject obj, jbyte receiver, jbyteArray jbuff)
+JNIEXPORT jint JNICALL Java_JNI_flyingship_src_Messenger_getMessageNative
+	(JNIEnv *env, jobject obj, jint receiver, jintArray jbuff)
 {
-	jbyte *buff = (env)->GetByteArrayElements(jbuff, NULL);
+	jint *buff = (env)->GetIntArrayElements(jbuff, NULL);
 	if (buff == NULL) {
 		return JNI_ERR; 
 	} 
 
-	jchar err = JNI_ERR;
+	jint err = JNI_ERR;
 
 	messages_mutex.lock();
 	bool success = false;
@@ -42,7 +42,7 @@ JNIEXPORT jbyte JNICALL Java_JNI_flyingship_src_Messenger_getMessageNative
 	}
 	#endif
 
-	(env)->ReleaseByteArrayElements(jbuff, buff, 0);
+	(env)->ReleaseIntArrayElements(jbuff, buff, 0);
 
 	return err;
 }
@@ -130,9 +130,9 @@ void _send_message(message_t *msg)
 
 
 JNIEXPORT void JNICALL Java_JNI_flyingship_src_Messenger_sendMessageNative
-	(JNIEnv *env, jobject obj, jbyteArray msg, int msg_len)
+	(JNIEnv *env, jobject obj, jintArray msg, int msg_len)
 {
-	jbyte *buff = (env)->GetByteArrayElements(msg, NULL);
+	jint *buff = (env)->GetIntArrayElements(msg, NULL);
 	if (buff == NULL) {
 		return; 
 	} 
@@ -147,11 +147,11 @@ JNIEXPORT void JNICALL Java_JNI_flyingship_src_Messenger_sendMessageNative
 		_send_message(message);
 	}
 
-	(env)->ReleaseByteArrayElements(msg, buff, 0);
+	(env)->ReleaseIntArrayElements(msg, buff, 0);
 
 }
 
-Messenger::Messenger(char id) : my_id(id)
+Messenger::Messenger(Elem_t id) : my_id(id)
 {
 	messages_q = &messages;
 }

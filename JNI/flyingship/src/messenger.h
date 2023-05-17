@@ -6,6 +6,7 @@
 #include <mutex>
 
 #define DATA_LEN 100
+typedef int Elem_t;
 
 #include "headers/JNI_flyingship_src_Messenger.h"
 
@@ -57,33 +58,33 @@ namespace msg{
         1 - primary mesage
         2 - 9 - user-defined
         */
-        char type;
+        Elem_t type;
 
         /*
         0 - invalid
         1 - backend
         2 - frontend
         */
-        char receiver;
+        Elem_t receiver;
 
         /*
         0 - invalid
         1 - backend
         2 - frontend
         */
-        char sender;
+        Elem_t sender;
 
-        char data[DATA_LEN];
+        Elem_t data[DATA_LEN];
     } message_t;
 
 
     class Messenger{
 
         std::vector<message_t> *messages_q;
-        char my_id;
+        Elem_t my_id;
 
         public:
-        Messenger(char);
+        Messenger(Elem_t);
         message_t get_message();
         void send_message(message_t msg);
 

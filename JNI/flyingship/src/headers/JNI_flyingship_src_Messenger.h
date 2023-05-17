@@ -10,18 +10,18 @@ extern "C" {
 /*
  * Class:     JNI_flyingship_src_Messenger
  * Method:    getMessageNative
- * Signature: (B[B)B
+ * Signature: (I[I)I
  */
-JNIEXPORT jbyte JNICALL Java_JNI_flyingship_src_Messenger_getMessageNative
-  (JNIEnv *, jobject, jbyte, jbyteArray);
+JNIEXPORT jint JNICALL Java_JNI_flyingship_src_Messenger_getMessageNative
+  (JNIEnv *, jobject, jint, jintArray);
 
 /*
  * Class:     JNI_flyingship_src_Messenger
  * Method:    sendMessageNative
- * Signature: ([BI)V
+ * Signature: ([II)V
  */
 JNIEXPORT void JNICALL Java_JNI_flyingship_src_Messenger_sendMessageNative
-  (JNIEnv *, jobject, jbyteArray, jint);
+  (JNIEnv *, jobject, jintArray, jint);
 
 #ifdef __cplusplus
 }

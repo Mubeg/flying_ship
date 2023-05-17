@@ -41,6 +41,9 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
     
     private GameEntity ship;
     private GameEntity[] lets;
+    
+    private Thread handler;
+    private Thread cursorUpdater;
 
     private int nLets;
     
@@ -77,6 +80,11 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         
         messenger = new Messenger(SenderIds.Frontend.value());
         
+        handler = new Thread(new GameMsgHandler(this, messenger));
+        handler.start();
+        cursorUpdater = new Thread(new GameCursorUpdater(messenger));
+        cursorUpdater.start();
+        
         nLets = 0;
         inGame = true;
         
@@ -86,12 +94,14 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
     
     public void loadPosData() {
         
+        /*
         Message message = messenger.getMessage();
         while ( message != null) {
             
             
             message = messenger.getMessage();
         }
+        */
         
         //!TODO debug
         /*
@@ -123,30 +133,57 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         
         
         int[] cursorPos = { cursorX, cursorY };
-
-        java.nio.ByteBuffer byteBuffer = java.nio.ByteBuffer.allocate(cursorPos.length * SIZEOF_INT); //!TODO debug
-        byteBuffer.order(java.nio.ByteOrder.LITTLE_ENDIAN);
-        java.nio.IntBuffer intBuffer = byteBuffer.asIntBuffer();
-        intBuffer.put(cursorPos);
         
         /*
         byte[] arr = byteBuffer.array();
         System.out.println(java.util.Arrays.toString(arr));
         */
         
-        Message message = new Message(MessagesTypes.SendInfo.value(), SenderIds.Backend.value(), byteBuffer.array());
+        Message message = new Message(MessagesTypes.SendInfo.value(), SenderIds.Backend.value(), cursorPos);
         messenger.sendMessage(message);
         
         //System.out.println(cursorX);
         //ship.move((int)cursorX, (int)cursorY);
     }
+    
+    public synchronized void setShip(int x, int y, int width, int height) {
+        
+        ship.move(x, y);
+        ship.resize(width, height);
+    }
+    
+    public synchronized void setLets(int start, int nLets, int[] parameters) {
+        
+        this.nLets = nLets;
+        for(int i = start; i < nLets+start; i+=4) {
+            lets[i].move(parameters[i], parameters[i+1]);
+            lets[i].resize(parameters[i+2], parameters[i+3]);
+        }
+    }
+    
+    public synchronized GameEntity getShip() {
+        return ship;
+    }
+    
+    public synchronized GameEntity getLet(int i) {
+        return lets[i];
+    }
+    
+    public synchronized void endGame() {
+        inGame = false;
+    }
+    
+    public synchronized boolean inGame() {
+        return inGame;
+    }
 
     @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
-        if (inGame) {
-            sendCursor();
-            loadPosData();
+        
+        /*
+        if (inGame() == true) {
         }
+        */
         
         repaint();
     }
@@ -156,11 +193,11 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         
         super.paintComponent(g);
                 
-        if (inGame) {
-            ship.draw(g, this);
+        if (inGame() == true) {
+            getShip().draw(g, this);
             
             for (int i = 0; i < nLets; i++) {
-                lets[i].draw(g, this);
+                getLet(i).draw(g, this);
             }
         }
     }

@@ -6,25 +6,25 @@ package JNI.flyingship.src;
  */
 public class Messenger {
 
-    private byte my_id;
+    private int my_id;
 
     /**
      * Creates new Messenger object with id
      * @param id is used to perform messaging
      */
-    public Messenger(byte id){
+    public Messenger(int id){
         my_id = id;
     }
 
     /**
      * 
-     * @return {@code Message mesage} with new bytearray copied from native queue or {@code null} if error occured
+     * @return {@code Message mesage} with new intarray copied from native queue or {@code null} if error occured
      */
     public Message getMessage()
     {
-        byte receiver = my_id;
-        byte[] msg = new byte[Message.MSG_LEN];
-        byte err = getMessageNative(receiver, msg);
+        int receiver = my_id;
+        int[] msg = new int[Message.MSG_LEN];
+        int err = getMessageNative(receiver, msg);
         if(err != 0){
             return null;
         }
@@ -33,20 +33,20 @@ public class Messenger {
     }
 
     /**
-     * Sends message, relies upon toBytes() to get correct length
+     * Sends message, relies upon toints() to get correct length
      * @param msg message to be sent
      */
     public void sendMessage(Message msg)
     {
         msg.sender = my_id;
-        sendMessageNative(msg.toBytes(), Message.MSG_LEN);
+        sendMessageNative(msg.toArray(), Message.MSG_LEN);
     }
 
     /**
      * Sends message only if msg length equals to MSG_LEN
      * @param msg message to be sent
      */
-    public void sendMessage(byte[] msg)
+    public void sendMessage(int[] msg)
     {
         sendMessageNative(msg, msg.length);
     }
@@ -57,17 +57,17 @@ public class Messenger {
      * @param buff buffer for the message to stored, expected to be at least {@code MSG_LEN} long
      * @return error code or 0 for success
      */
-    private native byte getMessageNative(byte receiver, byte[] buff);
+    private native int getMessageNative(int receiver, int[] buff);
     /**
      * Sends message to the queue (thread safe)<p>
      * Does not send message if msg_len != MSG_LEN
      * @param msg message to me sent
      * @param msg_len length of message
      */
-    private native void sendMessageNative(byte msg[], int msg_len);
+    private native void sendMessageNative(int msg[], int msg_len);
 
     static {
         System.load(
-            System.getProperty("user.dir") + "/build/JNI/flyingship/src/libnative.so");
+            System.getProperty("user.dir") + "/../build/JNI/flyingship/src/libnative.so");
        }
 }
