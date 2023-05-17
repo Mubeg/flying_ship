@@ -25,6 +25,14 @@ public class Replay {
         frames = new ArrayList<Message>();
     }
 
+    public Integer getID(){
+        return id;
+    }
+
+    public void setID(Integer new_id){
+        id = new_id;
+    }
+
     public Integer getPlayerID(){
         return player_id;
     }

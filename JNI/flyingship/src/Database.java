@@ -53,6 +53,9 @@ public class Database extends Thread {
                 if(map.containsKey(key)){
                     replays.get(i).setPlayerID(map.get(key));
                 }
+                if(replays.get(i).getID() != i){
+                    replays.get(i).setID(i);
+                }
             }
 
         } catch (IOException e) {
