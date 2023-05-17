@@ -30,7 +30,7 @@ import JNI.flyingship.src.SenderIds;
  */
 public class GamePanel extends javax.swing.JPanel implements java.awt.event.ActionListener {
 
-    private final int SIZEOF_INT = 32;
+    private final int SIZEOF_INT = 4;
     
     private final int UPDATEINTERVAL = 100;
     private final int MAXLETS = 400;
@@ -75,7 +75,7 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
             lets[i] = new GameEntity(letTexture, 200, 200, 50, 50);
         }
         
-        messenger = new Messenger((byte)3);
+        messenger = new Messenger(SenderIds.Frontend.value());
         
         nLets = 0;
         inGame = true;
@@ -88,12 +88,14 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         
         Message message = messenger.getMessage();
         
-        byte[] byteData = message.get_data(); //!TODO debug
+        //!TODO debug
+        /*
+        byte[] byteData = message.get_data();
         java.nio.ByteBuffer byteBuffer = java.nio.ByteBuffer.wrap(byteData);
         java.nio.IntBuffer intBuffer = byteBuffer.asIntBuffer();
         int[] intData = new int[(MAXLETS+1)*4+1];
         intBuffer.get(intData);
-        
+        */
         
         //!TODO implement
         /*
@@ -114,16 +116,21 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         int cursorX = (int)cursorLocation.getX();
         int cursorY = (int)cursorLocation.getY();
         
+        
         int[] cursorPos = { cursorX, cursorY };
 
-        java.nio.ByteBuffer byteBuffer = java.nio.ByteBuffer.allocate(cursorPos.length * 8); //!TODO debug
+        java.nio.ByteBuffer byteBuffer = java.nio.ByteBuffer.allocate(cursorPos.length * SIZEOF_INT); //!TODO debug
+        byteBuffer.order(java.nio.ByteOrder.LITTLE_ENDIAN);
         java.nio.IntBuffer intBuffer = byteBuffer.asIntBuffer();
         intBuffer.put(cursorPos);
-
-        //buffer.putInt(cursorX);
+        
+        /*
+        byte[] arr = byteBuffer.array();
+        System.out.println(java.util.Arrays.toString(arr));
+        */
         
         Message message = new Message(MessagesTypes.SendInfo.value(), SenderIds.Backend.value(), byteBuffer.array());
-        messenger.sendMessage(message);
+        //messenger.sendMessage(message);
         
         //System.out.println(cursorX);
         //ship.move((int)cursorX, (int)cursorY);
