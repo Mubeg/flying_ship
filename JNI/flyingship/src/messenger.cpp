@@ -35,7 +35,7 @@ JNIEXPORT jint JNICALL Java_JNI_flyingship_src_Messenger_getMessageNative
 
 	#ifdef DEBUG
 	if(success){
-		printf("Getting message with type %d, reciever %d, sender %d\nData[%d]:\n%d\n", ((message_t *)buff)->type, ((message_t *)buff)->receiver, ((message_t *)buff)->sender, DATA_LEN, ((message_t *)buff)->data[0]);
+		printf("Getting message with type %d, reciever %d, sender %d\nData[%d]: %d\n", ((message_t *)buff)->type, ((message_t *)buff)->receiver, ((message_t *)buff)->sender, DATA_LEN, ((message_t *)buff)->data[0]);
 	}
 	else{
 		//printf("#%d tried to get message, but failed\n", receiver);
@@ -56,7 +56,7 @@ void _send_message(message_t *msg)
 {
 
 	#ifdef DEBUG
-		printf("Sending message with type %d, reciever %d, sender %d\nData[%d]:\n%d\n", msg->type, msg->receiver, msg->sender, DATA_LEN, msg->data[0]);
+		printf("Sending message with type %d, reciever %d, sender %d\nData[%d]: %d\n", msg->type, msg->receiver, msg->sender, DATA_LEN, msg->data[0]);
 	#endif
 	switch (msg->receiver)
 	{
@@ -109,7 +109,7 @@ void _send_message(message_t *msg)
 				default:
 					SEND_MSG;
 					#ifdef DEBUG
-					printf("Sending message with type %d, reciever %d, sender %d\nData[%d]:\n%d\n", msg->type, msg->receiver, msg->sender, DATA_LEN, msg->data[0]);
+					printf("Sending message with type %d, reciever %d, sender %d\nData[%d]: %d\n", msg->type, msg->receiver, msg->sender, DATA_LEN, msg->data[0]);
 					#endif
 					if(msg->type == msg::UpdateFrame)
 					{
@@ -169,7 +169,7 @@ message_t Messenger::get_message()
 		if(msg->receiver == my_id){
 			message = *msg;
 			#ifdef DEBUG
-			printf("C++ Getting message with type %d, reciever %d, sender %d\nData[%d]:\n%d\n", msg->type, msg->receiver, msg->sender, DATA_LEN, msg->data[0]);
+			printf("C++ Getting message with type %d, reciever %d, sender %d\nData[%d]: %d\n", msg->type, msg->receiver, msg->sender, DATA_LEN, msg->data[0]);
 			#endif
 			messages.erase(msg);
 			break;

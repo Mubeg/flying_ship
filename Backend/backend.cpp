@@ -35,7 +35,7 @@ void Backend::run(){
                 running = false;
                 break;
             case msg::UpdateCursor:                                   //Нужен один int координата курсора по оси x
-                env.update_agent_pos((reinterpret_cast<int *> (msg.data))[0]);
+                env.update_agent_pos(msg.data[0]);
                 break;
             default:
                 break;

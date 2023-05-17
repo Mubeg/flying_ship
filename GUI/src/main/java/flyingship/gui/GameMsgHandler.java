@@ -71,7 +71,7 @@ public class GameMsgHandler implements Runnable {
         }
         
         switch(types[message.type]) {
-            case Bad:
+            case BadType:
                 break;
             case RequestSettings:
                 break;

@@ -5,7 +5,7 @@ package JNI.flyingship.src;
  * @author Mubeg
  */
 public enum MessagesTypes {
-    Bad, // = 0
+    BadType,
     RequestSettings,
     SettingsUpdate,
     Pause,
@@ -19,8 +19,8 @@ public enum MessagesTypes {
     End,
     StartGame,
     PlayerLogIn,
-    UpdateCursor,
-    GameOver;
+    GameOver,
+    UpdateCursor;
    
     public int value(){
         return (int) ordinal();
