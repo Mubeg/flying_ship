@@ -60,7 +60,7 @@ public class GameCursorUpdater implements Runnable {
         
         int[] cursorPos = { cursorX, cursorY };
         
-        Message message = new Message(MessagesTypes.SendInfo.value(), SenderIds.Backend.value(), cursorPos);
+        Message message = new Message(MessagesTypes.UpdateCursor.value(), SenderIds.Backend.value(), cursorPos);
         messenger.sendMessage(message);
         //ship.move((int)cursorX, (int)cursorY);
     }
