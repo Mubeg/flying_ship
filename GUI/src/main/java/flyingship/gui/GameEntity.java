@@ -26,22 +26,18 @@ public class GameEntity {
     
     private int x;
     private int y;
-    private int width;
-    private int height;
+    private int radius;
     
-    public GameEntity(java.awt.Image texture, int x, int y, int width, int height) {
+    public GameEntity(java.awt.Image texture, int x, int y, int radius) {
         setTexture(texture);
         
-        move(x, y);
-        resize(width, height);
+        transform(x, y, radius);
     }
     
     public GameEntity() {
         this.texture = null;
         
-        this.x = 0;
-        this.y = 0;
-        
+        transform(0, 0, 0);
     }
     
     public final void setTexture(java.awt.Image texture) {
@@ -53,29 +49,36 @@ public class GameEntity {
         this.y = y;
     }
     
-    public final void resize(int width, int height) {
-        this.width = width;
-        this.height = height;
+    public final void resize(int radius) {
+        this.radius = radius;
+    }
+    
+    public final void transform(int x, int y, int radius) {
+        move(x, y);
+        resize(radius);
+    }
+    
+    public int diameter() {
+        return 2 * radius;
+    }
+    
+    public int cornerX() {
+        return x - radius;
+    }
+    
+    public int cornerY() {
+        return y - radius;
     }
     
     public void draw(java.awt.Graphics g, java.awt.image.ImageObserver observer) {
-        
-        /*
-        System.out.println("[GUI] draw");
-        System.out.println("[GUI] x = " + x);
-        System.out.println("[GUI] y = " + y);
-        System.out.println("[GUI] w = " + width);
-        System.out.println("[GUI] h = " + height);
-        */
-        
-        g.drawImage(texture, x, y, width, height, observer);
+        g.drawImage(texture, cornerX(), cornerY(), diameter(), diameter(), observer);
     }
     
     public void print() {
         System.out.println("[GUI] print" );
+        System.out.println("[GUI] texture" + texture);
         System.out.println("[GUI] x =" + x );
         System.out.println("[GUI] y =" + y );
-        System.out.println("[GUI] w =" + width );
-        System.out.println("[GUI] h =" + height );
+        System.out.println("[GUI] radius" + radius );
     }
 }
