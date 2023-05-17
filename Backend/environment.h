@@ -9,10 +9,13 @@
 #include <vector>
 #include <thread>
 #include <ctime>
+
+extern int X_Agent;
+extern bool is_paused;
+extern bool is_running;
+
 class Environment{
 
-    bool is_paused = true;
-    bool is_running = true;
     unsigned int timer = 0;
     std::chrono::milliseconds time_tick_speed = DEFAULT_TIME_TICK_SPEED;
     int width = DEFAULT_SCREEN_WIDTH;

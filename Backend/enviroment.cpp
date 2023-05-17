@@ -15,10 +15,12 @@ void Environment::run() {
 
     while(is_running){
 
+        update_agent_pos(X_Agent);
         if(is_paused) {
             std::this_thread::sleep_for(ENV_PAUSE_SLEEP);
             continue;
         }
+
 
         std::vector<Object *>elem;
         for(int i = 0; i < N_Elem_In_Layer; i++) {
@@ -114,6 +116,8 @@ void Environment::pause() {
 }
 
 void Environment::resume() {
+
+    printf("Resumiong the game\n");
     is_paused = false;
 }
 
