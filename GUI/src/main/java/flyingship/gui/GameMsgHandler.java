@@ -122,8 +122,8 @@ public class GameMsgHandler implements Runnable {
         
         int[] intData = message.get_data();
         
-        panel.setShip(intData[0], intData[1], intData[2], intData[3]);
-        panel.setLets(5, intData[4], intData);
+        panel.setShip(intData[0], intData[1], intData[2]);
+        panel.setLets(4, intData[3], intData);
     }
     
     protected void handleGameOver(Message message) {
