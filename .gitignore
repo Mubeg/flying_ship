@@ -1,4 +1,6 @@
 .vscode
 *.class
 build
+*.db
 *.log
+img

@@ -1,3 +1,1 @@
-cd build
-java JNI.flyingship.src.FlyingShip
-cd ..
+java -cp ".:build:$(pwd)/lib/gson.jar" JNI.flyingship.src.FlyingShip
