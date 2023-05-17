@@ -21,7 +21,7 @@ public class Database extends Thread {
     public Database(){
         try (FileReader reader = new FileReader(filename)) {
         } catch (IOException e) {}
-        replays = new ArrayList<Replay>(null);
+        replays = new ArrayList<Replay>();
     }
 
     public void run(){
