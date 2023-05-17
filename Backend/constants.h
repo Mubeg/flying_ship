@@ -10,7 +10,7 @@ using namespace std::literals::chrono_literals;
 #define DEFAULT_SCREEN_WIDTH 800
 #define DEFAULT_SCREEN_HEIGHT 600
 #define DEFAULT_TIME_TICK_SPEED 200ms
-#define ENV_PAUSE_SLEEP 50ms
+#define ENV_PAUSE_SLEEP 1000ms
 #define AGENT_SIZE 10
 #define LAYER_HEIGHT 20
 #define MIN_SIZE 10
