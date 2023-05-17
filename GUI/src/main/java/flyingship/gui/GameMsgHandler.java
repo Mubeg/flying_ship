@@ -73,7 +73,7 @@ public class GameMsgHandler implements Runnable {
         System.out.println("[GUI] handleMessage: new message");
         System.out.println("[GUI] handleMessage: sender: " + message.sender);
         System.out.println("[GUI] handleMessage: type: " + message.type);
-        System.out.println("[GUI] handleMessage: data: " + message.get_data());
+        System.out.println("[GUI] handleMessage: data: " + java.util.Arrays.toString(message.get_data()));
         
         switch(types[message.type]) {
             case BadType:
