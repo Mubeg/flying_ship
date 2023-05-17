@@ -68,6 +68,6 @@ public class Messenger {
 
     static {
         System.load(
-            System.getProperty("user.dir") + "/../build/JNI/flyingship/src/libnative.so");
+            System.getProperty("user.dir") + "/build/JNI/flyingship/src/libnative.so");
        }
 }
