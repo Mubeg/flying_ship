@@ -13,7 +13,7 @@ public enum SenderIds {
     Logger,
     MessengingSystem;
     
-    public byte value(){
-        return (byte) ordinal();
+    public int value(){
+        return (int) ordinal();
     }
 }

@@ -46,8 +46,8 @@ public class FlyingShip {
                         messenger.sendMessage(msg);
                         break;
                     case End:
-                        byte sender_id = msg.sender;
-                        for(byte i = 1; i < senders.length; i++){
+                        int sender_id = msg.sender;
+                        for(int i = 1; i < senders.length; i++){
                             if(i != sender_id){
                                 msg.receiver = i; 
                                 messenger.sendMessage(msg);       

@@ -123,18 +123,13 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         
         
         int[] cursorPos = { cursorX, cursorY };
-
-        java.nio.ByteBuffer byteBuffer = java.nio.ByteBuffer.allocate(cursorPos.length * SIZEOF_INT); //!TODO debug
-        byteBuffer.order(java.nio.ByteOrder.LITTLE_ENDIAN);
-        java.nio.IntBuffer intBuffer = byteBuffer.asIntBuffer();
-        intBuffer.put(cursorPos);
         
         /*
         byte[] arr = byteBuffer.array();
         System.out.println(java.util.Arrays.toString(arr));
         */
         
-        Message message = new Message(MessagesTypes.SendInfo.value(), SenderIds.Backend.value(), byteBuffer.array());
+        Message message = new Message(MessagesTypes.SendInfo.value(), SenderIds.Backend.value(), cursorPos);
         messenger.sendMessage(message);
         
         //System.out.println(cursorX);

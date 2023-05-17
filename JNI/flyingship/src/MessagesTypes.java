@@ -22,7 +22,7 @@ public enum MessagesTypes {
     GameOver,
     UpdateCursor;
    
-    public byte value(){
-        return (byte) ordinal();
+    public int value(){
+        return (int) ordinal();
     }
 }

@@ -17,6 +17,11 @@ void Backend::run(){
     do{
         msg = messenger.get_message();
         switch(msg.type){
+            case msg::ReCheckin:
+                msg.type = msg::Checkin;
+                msg.receiver = msg.sender;
+                messenger.send_message(msg);
+                break;
             case msg::Bad:
                 break;
             case msg::Pause:
