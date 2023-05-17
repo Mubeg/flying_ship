@@ -111,7 +111,7 @@ void _send_message(message_t *msg)
 					#ifdef DEBUG
 					printf("Sending message with type %d, reciever %d, sender %d\nData[%d]: %d\n", msg->type, msg->receiver, msg->sender, DATA_LEN, msg->data[0]);
 					#endif
-					if(msg->type == msg::UpdateFrame || msg->type == msg::GameOver || msg->type =- msg::StartGame)
+					if(msg->type == msg::UpdateFrame || msg->type == msg::GameOver || msg->type == msg::StartGame)
 					{
 						msg->receiver = msg::Database;
 						SEND_MSG;
