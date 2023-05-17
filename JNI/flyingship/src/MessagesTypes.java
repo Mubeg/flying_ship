@@ -18,7 +18,9 @@ public enum MessagesTypes {
     SendInfo,
     End,
     StartGame,
-    PlayerLogIn;
+    PlayerLogIn,
+    GameOver,
+    UpdateCursor;
    
     public byte value(){
         return (byte) ordinal();
