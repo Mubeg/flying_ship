@@ -1,12 +1,14 @@
+#pragma once
 
 #include "constants.h"
 #include "object.h"
-#include "Agent.h"
+#include "obstacle_generation.h"
+
+#include "agent.h"
 #include <messenger.h>
 #include <vector>
 #include <thread>
-
-
+#include <ctime>
 class Environment{
 
     bool is_paused = false;
@@ -15,12 +17,14 @@ class Environment{
     std::chrono::milliseconds time_tick_speed = DEFAULT_TIME_TICK_SPEED;
     int width = DEFAULT_SCREEN_WIDTH;
     int height = DEFAULT_SCREEN_HEIGHT;
-    bool unique_id[UNIQUE_IDS_N] = {};
-    std::vector<Object> objects;
+    unsigned int unique_id[UNIQUE_IDS_N] = {};
     Messenger messenger;
     Agent agent;
+    std::vector<std::vector<Object *>> all_objects;
+
     
     public:
+
     Environment(Messenger);
     void run();
     void process_message();
@@ -29,5 +33,18 @@ class Environment{
     void pause();
     void resume();
     void stop();
+    void print_all_objects();
+
+    ~Environment() {
+        for (int i = 0; i < all_objects.size(); ++i) {
+            if (all_objects[i].empty() == true) {
+                continue;
+            }
+            for (int j = 0; j < N_Elem_In_Layer; ++j) {
+                //printf("Delete %p\n",all_objects[i][j]);
+                delete all_objects[i][j];
+            }
+        }
+    }
 
 };

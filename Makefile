@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -shared -fPIC -DDEBUG
+CXXFLAGS = -fPIC
 CXX_INCLUDES = -I/usr/lib/jvm/java-11-openjdk-amd64/include -I/usr/lib/jvm/java-11-openjdk-amd64/include/linux -IJNI/flyingship/src/
 BUILD_DIR = build/JNI/flyingship/src/
 BACK_SRC_DIR = Backend/
@@ -7,10 +7,10 @@ SRC_DIR = JNI/flyingship/src/
 
 
 libnative.so: clean java backend.o
-	$(CXX) $(CXXFLAGS) $(CXX_INCLUDES) -o $(BUILD_DIR)libnative.so $(SRC_DIR)messenger.cpp $(BUILD_DIR)*.o
+	$(CXX) -shared $(CXXFLAGS) $(CXX_INCLUDES) -o $(BUILD_DIR)libnative.so $(SRC_DIR)messenger.cpp $(BUILD_DIR)*.o
 
 backend.o:
-	$(CXX) $(CXX_INCLUDES) -c $(BACK_SRC_DIR)*.cpp
+	$(CXX) $(CXX_INCLUDES) $(CXXFLAGS) -c $(BACK_SRC_DIR)*.cpp
 	mv *.o ${BUILD_DIR}
 
 java:

@@ -19,12 +19,13 @@ namespace msg{
     };
 
     enum MessagesTypes {
-        Bad, // = 0
+        BadType, // = 0
         RequestSettings,
         SettingsUpdate,
         Pause,
         Stop,
-        Resume
+        Resume,
+        Cursor
     };
 
 }

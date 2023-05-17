@@ -46,7 +46,7 @@ JNIEXPORT void JNICALL Java_JNI_flyingship_src_Messenger_sendMessageNative
 
     message_t *message = nullptr;
     #ifdef DEBUG
-    printf("Sending message with length %d, needed is %d\n", msg_len, sizeof(message_t));
+    printf("Sending message with length %d, needed is %ld\n", msg_len, sizeof(message_t));
     #endif
     if(msg_len == sizeof(message_t))
     {
