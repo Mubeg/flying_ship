@@ -28,4 +28,6 @@ class Object{
     void print_obj();
     void sum_pos_y(int posY);
     int return_y();
+    int return_x();
+    int return_size();
 };
