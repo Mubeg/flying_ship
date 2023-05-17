@@ -41,6 +41,8 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
     
     private GameEntity ship;
     private GameEntity[] lets;
+    
+    private Thread handler;
 
     private int nLets;
     
@@ -77,6 +79,9 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         
         messenger = new Messenger(SenderIds.Frontend.value());
         
+        handler = new Thread(new GameMsgHandler(this, messenger));
+        handler.start();
+        
         nLets = 0;
         inGame = true;
         
@@ -86,12 +91,14 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
     
     public void loadPosData() {
         
+        /*
         Message message = messenger.getMessage();
         while ( message != null) {
             
             
             message = messenger.getMessage();
         }
+        */
         
         //!TODO debug
         /*
@@ -140,6 +147,29 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         //System.out.println(cursorX);
         //ship.move((int)cursorX, (int)cursorY);
     }
+    
+    public synchronized void setShip(int x, int y, int width, int height) {
+        
+        ship.move(x, y);
+        ship.resize(width, height);
+    }
+    
+    public synchronized void setLets(int start, int nLets, int[] parameters) {
+        
+        this.nLets = nLets;
+        for(int i = start; i < nLets+start; i+=4) {
+            lets[i].move(parameters[i], parameters[i+1]);
+            lets[i].resize(parameters[i+2], parameters[i+3]);
+        }
+    }
+    
+    public synchronized GameEntity getShip() {
+        return ship;
+    }
+    
+    public synchronized GameEntity getLet(int i) {
+        return lets[i];
+    }
 
     @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -159,10 +189,10 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         //System.out.println("Repaint");
         
         if (inGame) {
-            ship.draw(g, this);
+            getShip().draw(g, this);
             
             for (int i = 0; i < nLets; i++) {
-                lets[i].draw(g, this);
+                getLet(i).draw(g, this);
             }
         }
     }
