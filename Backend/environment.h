@@ -35,7 +35,7 @@ class Environment{
     void stop();
     void print_all_objects();
     void update_agent_pos(int new_posX);
-    void create_array_to_send(int (&array_to_send)[DATA_LEN]);
+    void create_array_to_send(message_t *msg);
 
     ~Environment() {
         for (int i = 0; i < all_objects.size(); ++i) {

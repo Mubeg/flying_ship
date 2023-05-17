@@ -48,6 +48,10 @@ void Environment::run() {
                         if (agent.check_collision(all_objects[j][k]) == 1) {
                             std::cout << "I crashed :(" << std::endl;
                             is_running = false;
+                            message_t msg = {};
+                            msg.receiver = msg::Frontend;
+                            msg.type = msg::GameOver;
+                            messenger.send_message(msg);
                         }
 
                         all_objects[j][k]->sum_pos_y(SHIFT);
@@ -89,12 +93,12 @@ void Environment::run() {
         message_t msg = {};
         msg.type = msg::UpdateFrame;
         msg.receiver = msg::Frontend;
-        create_array_to_send(msg.data);
+        create_array_to_send(&msg);
         // std::cout << "ARRAY!" << std::endl;
         // for (int i = 0; i < 100; ++i) {
         //     std::cout << arr[i] << " ";
         // }
-        std::cout << std::endl;
+        //std::cout << std::endl;
         messenger.send_message(msg);
         std::this_thread::sleep_for(ENV_PAUSE_SLEEP);
         
@@ -125,14 +129,14 @@ void Environment::print_all_objects() {
     }
 }
 
-void Environment::create_array_to_send(int (&array_to_send)[DATA_LEN]) {
+void Environment::create_array_to_send(message_t *msg) {
     
     int pos = 0;
     int num_elem = 0;
 
-    array_to_send[0] = agent.return_x();
-    array_to_send[1] = agent.return_y();
-    array_to_send[2] = agent.return_size();
+    msg->data[0] = agent.return_x();
+    msg->data[1] = agent.return_y();
+    msg->data[2] = agent.return_size();
 
     for (int i = 0; i < all_objects.size(); ++i) {
 
@@ -147,13 +151,13 @@ void Environment::create_array_to_send(int (&array_to_send)[DATA_LEN]) {
             }
             else {
                 pos = 4 + (i * N_Elem_In_Layer + j) * 3;
-                array_to_send[pos] = all_objects[i][j]->return_x();
-                array_to_send[pos + 1] = all_objects[i][j]->return_y();
-                array_to_send[pos + 2] = all_objects[i][j]->return_size();
+                msg->data[pos] = all_objects[i][j]->return_x();
+                msg->data[pos + 1] = all_objects[i][j]->return_y();
+                msg->data[pos + 2] = all_objects[i][j]->return_size();
                 num_elem++;
             }
         }
     }
 
-    array_to_send[3] = num_elem;
+    msg->data[3] = num_elem;
 }
