@@ -31,7 +31,7 @@ public class Database extends Thread {
         try{
             String[] content = new String(Files.readAllBytes(Paths.get(filename))).split("\n");
             Gson gson = new Gson();
-            replays = gson.fromJson(content[0], replays.getClass());
+            //replays = gson.fromJson(content[0], replays.getClass());
             players = gson.fromJson(content[1], players.getClass());
 
             Map<Integer, Integer> map = new HashMap<Integer, Integer>();
