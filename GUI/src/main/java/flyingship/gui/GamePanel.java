@@ -87,6 +87,11 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
     public void loadPosData() {
         
         Message message = messenger.getMessage();
+        while ( message != null) {
+            
+            
+            message = messenger.getMessage();
+        }
         
         //!TODO debug
         /*
