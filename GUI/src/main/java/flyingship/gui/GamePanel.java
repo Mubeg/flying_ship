@@ -152,13 +152,32 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         ship.resize(width, height);
     }
     
+    public synchronized void setShip(int centralX, int centralY, int radius) {
+        
+        int diameter = 2 * radius;
+        int x = centralX - radius;
+        int y = centralY - radius;
+        
+        ship.move(x, y);
+        ship.resize(diameter, diameter);
+    }
+    
     public synchronized void setLets(int start, int nLets, int[] parameters) {
         
         this.nLets = nLets;
-        for(int i = start; i < nLets+start; i+=4) {
-            lets[i].move(parameters[i], parameters[i+1]);
-            lets[i].resize(parameters[i+2], parameters[i+3]);
+        for(int i = start; i < nLets+start; i+=3) {
+            setLet(i, i, i+1, i+2);
         }
+    }
+    
+    public synchronized void setLet(int i, int centralX, int centralY, int radius) {
+        
+        int diameter = 2 * radius;
+        int x = centralX - radius;
+        int y = centralY - radius;
+        
+        lets[i].move(x, y);
+        lets[i].resize(diameter,diameter);
     }
     
     public synchronized GameEntity getShip() {
