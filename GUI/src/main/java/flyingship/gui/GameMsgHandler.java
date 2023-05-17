@@ -49,15 +49,15 @@ public class GameMsgHandler implements Runnable {
         while(true) {
             
             message = messenger.getMessage();
-            //if(message != null){
+            if(message != null){
                 handleMessage(message);
-            //}
+            }
             
             try {
                 java.lang.Thread.sleep(500);
             }
             catch(Exception e){
-                System.out.println("GameMsgHandler sleep exception");
+                System.out.println("[GUI] GameMsgHandler sleep exception");
             }
         }
     }
@@ -66,9 +66,14 @@ public class GameMsgHandler implements Runnable {
         
         if(message == null) {
             
-            System.out.println("handleMessage: null message");
+            System.out.println("[GUI] handleMessage: null message");
             return;
         }
+        
+        System.out.println("[GUI] handleMessage: new message");
+        System.out.println("[GUI] handleMessage: sender: " + message.sender);
+        System.out.println("[GUI] handleMessage: type: " + message.type);
+        System.out.println("[GUI] handleMessage: data: " + message.get_data());
         
         switch(types[message.type]) {
             case BadType:
@@ -84,6 +89,7 @@ public class GameMsgHandler implements Runnable {
             case Resume:
                 break;
             case UpdateFrame:
+                System.out.println("[GUI] handleMessage UpdateFrame switch");
                 handleUpdateFrame(message);
                 break;
             case Checkin:
@@ -112,10 +118,12 @@ public class GameMsgHandler implements Runnable {
     
     protected void handleUpdateFrame(Message message) {
         
+        System.out.println("[GUI] handleUpdateFrame new message");
+        
         int[] intData = message.get_data();
         
-        panel.setShip(intData[0], intData[1], intData[2], intData[3]);
-        panel.setLets(5, intData[4], intData);
+        panel.setShip(intData[0], intData[1], intData[2]);
+        panel.setLets(4, intData[3], intData);
     }
     
     protected void handleGameOver(Message message) {

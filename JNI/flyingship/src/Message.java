@@ -33,13 +33,12 @@ public class Message {
 
     public Message(int[] msg_data)
     {
-        if(msg_data.length >= DATA_LEN){return;}
-
+        if(msg_data.length > MSG_LEN){return;}
         type = msg_data[0];
         receiver = msg_data[1];
         sender = msg_data[2];
         data = new int[DATA_LEN];
-        System.arraycopy(msg_data, 3, data, 0, msg_data.length);
+        System.arraycopy(msg_data, 3, data, 0, DATA_LEN);
     }
     
     public Message(int msg_type, int msg_receiver, int[] msg_data)
