@@ -21,6 +21,8 @@ package flyingship.gui;
 //import JNI.flyingship.src.*;
 import JNI.flyingship.src.Messenger;
 import JNI.flyingship.src.Message;
+import JNI.flyingship.src.MessagesTypes;
+import JNI.flyingship.src.SenderIds;
 
 /**
  *
@@ -28,6 +30,8 @@ import JNI.flyingship.src.Message;
  */
 public class GamePanel extends javax.swing.JPanel implements java.awt.event.ActionListener {
 
+    private final int SIZEOF_INT = 4;
+    
     private final int UPDATEINTERVAL = 100;
     private final int MAXLETS = 400;
     private final String imgDir = "img/";
@@ -71,7 +75,7 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
             lets[i] = new GameEntity(letTexture, 200, 200, 50, 50);
         }
         
-        messenger = new Messenger((byte)3);
+        messenger = new Messenger(SenderIds.Frontend.value());
         
         nLets = 0;
         inGame = true;
@@ -83,6 +87,20 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
     public void loadPosData() {
         
         Message message = messenger.getMessage();
+        while ( message != null) {
+            
+            
+            message = messenger.getMessage();
+        }
+        
+        //!TODO debug
+        /*
+        byte[] byteData = message.get_data();
+        java.nio.ByteBuffer byteBuffer = java.nio.ByteBuffer.wrap(byteData);
+        java.nio.IntBuffer intBuffer = byteBuffer.asIntBuffer();
+        int[] intData = new int[(MAXLETS+1)*4+1];
+        intBuffer.get(intData);
+        */
         
         //!TODO implement
         /*
@@ -103,15 +121,21 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         int cursorX = (int)cursorLocation.getX();
         int cursorY = (int)cursorLocation.getY();
         
-        Message message = new Message(); //!TODO use another Ctor
         
-        //!TODO implement
+        int[] cursorPos = { cursorX, cursorY };
+
+        java.nio.ByteBuffer byteBuffer = java.nio.ByteBuffer.allocate(cursorPos.length * SIZEOF_INT); //!TODO debug
+        byteBuffer.order(java.nio.ByteOrder.LITTLE_ENDIAN);
+        java.nio.IntBuffer intBuffer = byteBuffer.asIntBuffer();
+        intBuffer.put(cursorPos);
+        
         /*
-        message. = cursorX;
-        message. = cursorY;
+        byte[] arr = byteBuffer.array();
+        System.out.println(java.util.Arrays.toString(arr));
         */
         
-        messenger.sendMessage(message);
+        Message message = new Message(MessagesTypes.SendInfo.value(), SenderIds.Backend.value(), byteBuffer.array());
+        //messenger.sendMessage(message);
         
         //System.out.println(cursorX);
         //ship.move((int)cursorX, (int)cursorY);
