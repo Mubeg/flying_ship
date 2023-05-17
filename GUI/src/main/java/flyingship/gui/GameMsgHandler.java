@@ -49,12 +49,12 @@ public class GameMsgHandler implements Runnable {
         while(true) {
             
             message = messenger.getMessage();
-            if(message != null){
+            //if(message != null){
                 handleMessage(message);
-            }
+            //}
             
             try {
-                java.lang.Thread.sleep(100);
+                java.lang.Thread.sleep(500);
             }
             catch(Exception e){
                 System.out.println("GameMsgHandler sleep exception");
@@ -102,6 +102,9 @@ public class GameMsgHandler implements Runnable {
                 break;
             case UpdateCursor:
                 break;
+            case GameOver:
+                handleGameOver(message);
+                break;
             default:
                 break;
         }
@@ -114,6 +117,11 @@ public class GameMsgHandler implements Runnable {
         
         panel.setShip(intData[0], intData[1], intData[2], intData[3]);
         panel.setLets(5, intData[4], intData);
+    }
+    
+    protected void handleGameOver(Message message) {
+        
+        panel.endGame();
     }
     
     protected int[] byteToInt(byte[] byteData) {

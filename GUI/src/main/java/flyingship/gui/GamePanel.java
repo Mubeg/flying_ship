@@ -173,12 +173,20 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
     public synchronized GameEntity getLet(int i) {
         return lets[i];
     }
+    
+    public synchronized void endGame() {
+        inGame = false;
+    }
+    
+    public synchronized boolean inGame() {
+        return inGame;
+    }
 
     @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
         
         /*
-        if (inGame) {
+        if (inGame() == true) {
         }
         */
         
@@ -190,7 +198,7 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
         
         super.paintComponent(g);
                 
-        if (inGame) {
+        if (inGame() == true) {
             getShip().draw(g, this);
             
             for (int i = 0; i < nLets; i++) {
