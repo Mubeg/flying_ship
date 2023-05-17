@@ -92,7 +92,7 @@ public class Message {
         msg[0] = type;
         msg[1] = receiver;
         msg[2] = sender;
-        for(int i = 0; i < data.length; i++){
+        for(int i = 0; i < data.length; i++){ //!TODO fix NullPointerException
             msg[3 + i] = data[i];
         }
         
