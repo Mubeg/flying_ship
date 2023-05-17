@@ -57,14 +57,24 @@ public class GameMsgHandler implements Runnable {
                 java.lang.Thread.sleep(500);
             }
             catch(Exception e){
-                System.out.println("GameMsgHandler sleep exception");
+                System.out.println("[GUI] GameMsgHandler sleep exception");
             }
         }
     }
     
     protected void handleMessage(Message message) {
         
-        System.out.println(String.format("Message type is %d", message.type));
+        if(message == null) {
+            
+            System.out.println("[GUI] handleMessage: null message");
+            return;
+        }
+        
+        System.out.println("[GUI] handleMessage: new message");
+        System.out.println("[GUI] handleMessage: sender: " + message.sender);
+        System.out.println("[GUI] handleMessage: type: " + message.type);
+        System.out.println("[GUI] handleMessage: data: " + message.get_data());
+        
         switch(types[message.type]) {
             case BadType:
                 break;
@@ -79,6 +89,7 @@ public class GameMsgHandler implements Runnable {
             case Resume:
                 break;
             case UpdateFrame:
+                System.out.println("[GUI] handleMessage UpdateFrame switch");
                 handleUpdateFrame(message);
                 break;
             case Checkin:
@@ -106,6 +117,8 @@ public class GameMsgHandler implements Runnable {
     }
     
     protected void handleUpdateFrame(Message message) {
+        
+        System.out.println("[GUI] handleUpdateFrame new message");
         
         int[] intData = message.get_data();
         
