@@ -29,7 +29,7 @@ void Backend::run(){
                 env.stop();
                 running = false;
                 break;
-            case msg::Cursor:                                   //Нужен один int координата курсора по оси x
+            case msg::UpdateCursor:                                   //Нужен один int координата курсора по оси x
                 X_Agent = (reinterpret_cast<int *> (msg.data))[0];
                 break;
             default:
