@@ -53,12 +53,14 @@ public class GameMsgHandler implements Runnable {
                 handleMessage(message);
             }
             
+            /*
             try {
-                java.lang.Thread.sleep(500);
+                java.lang.Thread.sleep(200);
             }
             catch(Exception e){
                 System.out.println("[GUI] GameMsgHandler sleep exception");
             }
+            */
         }
     }
     

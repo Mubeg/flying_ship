@@ -33,7 +33,7 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
     private final int SIZEOF_INT = 4;
     private final int COORD_PER_ENTITY = 3;
     
-    private final int UPDATEINTERVAL = 500;
+    private final int UPDATEINTERVAL = 20;
     private final int MAXLETS = 400;
     private final String imgDir = "img/";
     
