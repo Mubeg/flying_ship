@@ -72,9 +72,7 @@ public class GameMsgHandler implements Runnable {
             return;
         }
         
-        System.out.println("[GUI] handleMessage: new message");
-        System.out.println("[GUI] handleMessage: sender: " + message.sender);
-        System.out.println("[GUI] handleMessage: type: " + message.type);
+        System.out.println("[GUI] handleMessage: " + "sender=" + message.sender + "; " + "receiver=" + message.receiver + "; " + "type=" + message.type);
         System.out.println("[GUI] handleMessage: data: " + java.util.Arrays.toString(message.get_data()));
         
         switch(types[message.type]) {
@@ -91,7 +89,6 @@ public class GameMsgHandler implements Runnable {
             case Resume:
                 break;
             case UpdateFrame:
-                System.out.println("[GUI] handleMessage UpdateFrame switch");
                 handleUpdateFrame(message);
                 break;
             case Checkin:
@@ -120,7 +117,7 @@ public class GameMsgHandler implements Runnable {
     
     protected void handleUpdateFrame(Message message) {
         
-        System.out.println("[GUI] handleUpdateFrame new message");
+        System.out.println("[GUI] handleUpdateFrame: call panel.loadGameEntities");
         
         panel.loadGameEntities(message.get_data());
     }

@@ -150,8 +150,8 @@ public class GamePanel extends javax.swing.JPanel implements java.awt.event.Acti
             }
         }
         
-        System.out.println("[GUI] paintComponent nLets = " + nLets);
-        System.out.println("[GUI] paintComponent");
+        System.out.println("[GUI] paintComponent: " + "nLets=" + nLets + "; " + "draw entities:");
+        getShip().print();
         for(int i = 0; i < nLets; i++) {
             getLet(i).print();
         }

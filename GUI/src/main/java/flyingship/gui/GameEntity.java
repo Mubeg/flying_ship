@@ -75,10 +75,6 @@ public class GameEntity {
     }
     
     public void print() {
-        System.out.println("[GUI] print" );
-        System.out.println("[GUI] texture" + texture);
-        System.out.println("[GUI] x =" + x );
-        System.out.println("[GUI] y =" + y );
-        System.out.println("[GUI] radius" + radius );
+        System.out.println("[GUI] GameEntity print: " + "x=" + x + "; " + "y=" + y + "; " + "r=" + radius + "; " + "t=" + texture);
     }
 }
